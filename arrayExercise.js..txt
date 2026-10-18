@@ -1,0 +1,6 @@
+inputnumber: [2,7, 8, 5]
+
+for(let index = 0; index.length < number; index++) {
+    for(let count = index+1; index.length < number; count++)
+
+}

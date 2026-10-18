@@ -6,10 +6,10 @@ public class TaskThree{
     System.out.println("Enter number");
 
     
-    for(int index = 0; index <=10; index++){  
+    for(char[] index = 0; index <=10; index++){  
         System.out.println("Enter Number");
         }
-            int number = input.nextInt();
+            char[] number = input.nextInt();
           System.out.println("multiple 4 and 8");
 
 }
