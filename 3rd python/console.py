@@ -4,7 +4,7 @@
 number to it without directly modifying the
 tuple """
 
-numbers = {4, 7, 11, 23}:
+numbers = {4, 7, 11, 23}
 numbers.append(50)
 print(numbers)
 

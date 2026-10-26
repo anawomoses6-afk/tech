@@ -1,0 +1,6 @@
+public class AllEvenNumber {
+    public static void main(String[] args) {
+        
+    
+    
+    }

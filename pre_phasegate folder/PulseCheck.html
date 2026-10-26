@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<!--
+  CodeCircuit — Programming Triage Assessment (single file, zero build)
+  Run: save as index.html and double-click it (needs internet once for the Tailwind CDN + fonts),
+  or drop it on GitHub Pages / Netlify Drop.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeCircuit · Programming Triage Assessment</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','ui-monospace','Menlo','monospace'] } } } };
+</script>
+<style>
+  body{background:#070b16;}
+  .bg-glow{position:fixed;inset:0;z-index:-1;background:
+    radial-gradient(900px 500px at 12% -10%,rgba(99,102,241,.22),transparent 60%),
+    radial-gradient(800px 500px at 100% 0%,rgba(34,211,238,.14),transparent 60%),
+    #070b16;}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:1rem;box-shadow:0 10px 40px -18px rgba(0,0,0,.7);}
+  .fade-in{animation:fade .35s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .code{background:#0a0f1e;border:1px solid rgba(255,255,255,.08);border-radius:.75rem;padding:1rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:1.6;overflow:auto;white-space:pre;color:#d6deeb;tab-size:4}
+  .tk-k{color:#c792ea}.tk-s{color:#ecc48d}.tk-n{color:#f78c6c}.tk-c{color:#637777;font-style:italic}
+  .opt{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.8rem 1rem;border-radius:.75rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);transition:.15s;cursor:pointer}
+  .opt:disabled{cursor:default}
+  .opt:hover:not(:disabled){border-color:#818cf8;background:rgba(99,102,241,.12)}
+  .opt-key{display:grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:.5rem;background:rgba(255,255,255,.08);font-size:.75rem;font-weight:700;flex:none}
+  .opt.correct{border-color:#10b981;background:rgba(16,185,129,.15)}
+  .opt.correct .opt-key{background:#10b981;color:#04130d}
+  .opt.wrong{border-color:#f43f5e;background:rgba(244,63,94,.15)}
+  .opt.wrong .opt-key{background:#f43f5e;color:#1a0309}
+  .opt.dim{opacity:.45}
+  .editor{width:100%;min-height:340px;resize:vertical;background:#0a0f1e;border:1px solid rgba(255,255,255,.12);border-radius:.75rem;padding:1rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:1.6;color:#d6deeb;caret-color:#22d3ee;tab-size:4;white-space:pre;overflow:auto;outline:none}
+  .editor:focus{border-color:#818cf8;box-shadow:0 0 0 3px rgba(129,140,248,.2)}
+  .lang-card{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;border-radius:.75rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);cursor:pointer;transition:.15s;text-align:left;width:100%}
+  .lang-card:hover{border-color:#818cf8}
+  .lang-card.active{border-color:#22d3ee;background:rgba(34,211,238,.1);box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+  .tab{padding:.5rem .9rem;border-radius:.6rem;font-size:.85rem;font-weight:600;border:1px solid rgba(255,255,255,.1);color:#94a3b8;cursor:pointer;transition:.15s}
+  .tab:hover{color:#fff}
+  .tab.active{background:rgba(99,102,241,.2);border-color:#818cf8;color:#fff}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem 1.1rem;border-radius:.7rem;font-weight:600;font-size:.9rem;transition:.15s;cursor:pointer}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn-primary{background:linear-gradient(135deg,#6366f1,#22d3ee);color:#050816}
+  .btn-primary:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+  .btn-ghost{border:1px solid rgba(255,255,255,.15);color:#e2e8f0;background:rgba(255,255,255,.03)}
+  .btn-ghost:hover:not(:disabled){background:rgba(255,255,255,.08)}
+  .bar{height:.55rem;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+  .bar>i{display:block;height:100%;border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+  details>summary{cursor:pointer;list-style:none}
+  details>summary::-webkit-details-marker{display:none}
+  @media print{
+    body{background:#fff;color:#111}.bg-glow,.no-print,header{display:none!important}
+    .card{background:#fff;border:1px solid #ccc;box-shadow:none}.code{background:#f6f8fa;color:#111;border-color:#ddd}
+    .text-white,.text-slate-200,.text-slate-300,.text-slate-400{color:#111!important}
+    details{display:block}details>*{display:block}
+  }
+  body.guard{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  body.guard input,body.guard textarea{-webkit-user-select:text;user-select:text}
+</style>
+</head>
+<body class="font-sans text-slate-200 min-h-screen antialiased">
+<div class="bg-glow"></div>
+
+<header class="no-print sticky top-0 z-20 backdrop-blur bg-slate-950/70 border-b border-white/10">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-2 font-bold text-white">
+      <span class="grid place-items-center w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 text-slate-950 font-mono text-xs">&lt;/&gt;</span>
+      <span>CodeCircuit <span class="text-slate-400 font-medium hidden sm:inline">Assessment</span></span>
+    </div>
+    <div id="stepper" class="hidden sm:flex items-center gap-2 text-xs"></div>
+    <button id="instrBtn" onclick="showInstructor()" class="text-xs text-slate-400 hover:text-white">Instructor view</button>
+  </div>
+</header>
+
+<main id="screen" class="max-w-5xl mx-auto px-4 py-8"></main>
+<div id="toast" class="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 rounded-lg bg-slate-800 border border-white/10 text-sm shadow-xl"></div>
+<div id="overlay" class="no-print fixed inset-0 z-50 hidden place-items-center bg-slate-950/80 backdrop-blur-sm">
+  <div class="card px-8 py-6 text-center"><div class="w-10 h-10 mx-auto mb-3 rounded-full border-4 border-indigo-400/30 border-t-cyan-300 animate-spin"></div><div class="font-semibold text-white">Grading your submission…</div><div class="text-xs text-slate-400 mt-1">Running tests and checks</div></div>
+</div>
+<noscript><p class="p-6 text-center">This assessment needs JavaScript enabled.</p></noscript>
+
+<script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const QUIZ_MAX = 40;                       // points for the 12-question quiz
+const LANGS = {
+  java:       { label: 'Java',       icon: '☕', note: 'Statically typed · int division' },
+  python:     { label: 'Python',     icon: '🐍', note: 'Indentation-based · // for floor division' },
+  javascript: { label: 'JavaScript', icon: '⚡', note: 'Dynamic · Math.floor for integer division' }
+};
+const SECTIONS = ['Variables & Operators', 'Control Structures', 'Functions & Scope', 'Arrays & Matrices'];
+const REMEDY = {
+  'Variables & Operators': 'Hand-trace assignments and operator precedence; drill integer division (/, //, Math.floor) and the % operator on small numbers.',
+  'Control Structures':    'Build trace tables (i, total, output) for if/else chains and for-loops; practise break vs continue on 5-line programs.',
+  'Functions & Scope':     'Practise parameters vs arguments, return values, and local vs global variables; predict output before running.',
+  'Arrays & Matrices':     'Draw arrays and grids with index labels; practise last-index (length - 1) and row/column traversal, including diagonals.',
+  'Task A':                'Re-write FizzBuzz from scratch without notes: loop over the whole range, check the "both" case first, then each single divisor.',
+  'Task B':                'Practise the filter → transform → collect pattern with small arrays, including empty and all-odd inputs.',
+  'Task C':                'Work through a 3×3 grid on paper: main diagonal is [i][i], anti-diagonal is [i][n-1-i]; then wrap in abs().'
+};
+const TIERS = {
+  1: { name: 'Tier 1 · Foundations', range: 'Below 50%', tagline: 'Needs support with the basics',
+       badge: 'bg-rose-500/15 text-rose-300 border-rose-500/40', ring: '#f43f5e', bar: 'bg-rose-500', glow: 'from-rose-500/20',
+       focus: 'Targeted remediation on syntax and loop mechanics',
+       recs: ['Re-trace variable assignment, operators and precedence by hand — 15–20 short drills a day for two weeks.',
+              'Loop mechanics clinic: write trace tables (i, total, output) for for/while loops, then practise break and continue.',
+              'Re-do FizzBuzz daily from a blank file until the syntax in your language is automatic.',
+              'Join a small-group instructor clinic and pair with a Tier 3 peer; re-assess in two weeks.'] },
+  2: { name: 'Tier 2 · Competent', range: '50% – 85%', tagline: 'Functional logic, ready to level up',
+       badge: 'bg-sky-500/15 text-sky-300 border-sky-500/40', ring: '#38bdf8', bar: 'bg-sky-500', glow: 'from-sky-500/20',
+       focus: 'Standard track coding katas',
+       recs: ['Follow the standard kata track: two katas a day on functions, array filtering/mapping and nested loops.',
+              'Practise 2D traversal on paper first — rows, columns, then both diagonals — then in code.',
+              'Write your own edge-case tests (empty input, single element, negatives, zero) for every function.',
+              'Target your weakest sections below; aim for 85%+ in every section to graduate to Tier 3.'] },
+  3: { name: 'Tier 3 · Advanced', range: 'Above 85%', tagline: 'Strong across logic and matrices',
+       badge: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40', ring: '#10b981', bar: 'bg-emerald-500', glow: 'from-emerald-500/20',
+       focus: 'Accelerated project-based work and peer mentorship',
+       recs: ['Start an accelerated mini-project (grade book, text adventure or matrix-utility library) using functions, arrays and tests.',
+              'Mentor two Tier 1 peers during clinic hours — teaching is the fastest way to deepen mastery.',
+              'Stretch goals: Big-O analysis, recursion, and re-implementing your solutions in a second language.',
+              'Practise Git workflow and code review on every project.'] }
+};
+
+/* =========================================================
+   QUIZ — 12 question TEMPLATES. Every student gets their own variant:
+   numbers, names and option order are generated from a per-student seed,
+   difficulty stays equal, and the answer key is computed for that variant.
+   ========================================================= */
+let QUESTIONS = [];   // the current student's generated questions (stored in S.questions)
+
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function makeRng(seed) {
+  const f = mulberry32(seed >>> 0);
+  return {
+    f,
+    int: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: arr => arr[Math.floor(f() * arr.length)],
+    shuffle: arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(f() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  };
+}
+const L3 = (java, python, javascript) => ({ java, python, javascript });
+const J2D = m => '{' + m.map(r => '{' + r.join(', ') + '}').join(', ') + '}';
+const L2D = m => '[' + m.map(r => '[' + r.join(', ') + ']').join(', ') + ']';
+function buildMC(rng, correct, cands, numeric) {
+  const c = String(correct), seen = new Set([c]), ds = [];
+  rng.shuffle(cands.map(String)).forEach(x => { if (!seen.has(x) && ds.length < 3) { seen.add(x); ds.push(x); } });
+  let k = 1;
+  while (ds.length < 3) { const v = String(Number(c) + (rng.f() < .5 ? -1 : 1) * (k++)); if (!seen.has(v)) { seen.add(v); ds.push(v); } }
+  const opts = numeric ? [c, ...ds].sort((a, b) => Number(a) - Number(b)) : rng.shuffle([c, ...ds]);
+  return { options: opts, answer: opts.indexOf(c) };
+}
+const rndMatrix = (rng, r, c, lo, hi, distinct) => {
+  const used = new Set(), m = [];
+  for (let i = 0; i < r; i++) { const row = []; for (let j = 0; j < c; j++) { let v; do { v = rng.int(lo, hi); } while (distinct && used.has(v)); used.add(v); row.push(v); } m.push(row); }
+  return m;
+};
+
+const TEMPLATES = [
+ // 1 — assignment copies a value
+ rng => {
+   const [x, y] = rng.pick([['a','b'],['x','y'],['p','q'],['m','n']]), a = rng.int(3, 9), k = rng.int(2, 6);
+   const mc = buildMC(rng, a, [a + k, k, a * k, 2 * a + k, a - 1], true);
+   return { section: 'Variables & Operators', type: 'mc', text: 'What is printed?',
+     code: L3(`int ${x} = ${a};\nint ${y} = ${x};\n${x} = ${x} + ${k};\nSystem.out.println(${y});`, `${x} = ${a}\n${y} = ${x}\n${x} = ${x} + ${k}\nprint(${y})`, `let ${x} = ${a};\nlet ${y} = ${x};\n${x} = ${x} + ${k};\nconsole.log(${y});`),
+     ...mc, explain: `${y} copies the value of ${x} (${a}) at that moment. Changing ${x} afterwards (to ${a + k}) does not change ${y}.` };
+ },
+ // 2 — operator precedence (two forms)
+ rng => {
+   if (rng.f() < .5) {
+     const t = rng.int(2, 4), m = rng.int(2, 6), s = t * m, p = rng.int(2, 9), q = rng.int(2, 6), r = rng.int(2, 6), ans = p + q * r - m;
+     const mc = buildMC(rng, ans, [Math.floor(((p + q) * r - s) / t), (p + q) * r - m, p + q * r - s, p + q * r + m, p + q * r], true);
+     return { section: 'Variables & Operators', type: 'mc', text: 'What value does result hold? (Remember operator precedence.)',
+       code: L3(`int result = ${p} + ${q} * ${r} - ${s} / ${t};`, `result = ${p} + ${q} * ${r} - ${s} // ${t}`, `let result = ${p} + ${q} * ${r} - Math.floor(${s} / ${t});`),
+       ...mc, explain: `Multiplication and division run before addition and subtraction: ${p} + ${q * r} - ${m} = ${ans}. (Going strictly left-to-right is the classic trap.)` };
+   }
+   let p, q, r, s, t;
+   do { p = rng.int(2, 6); q = rng.int(2, 6); r = rng.int(2, 6); s = rng.int(10, 29); t = rng.int(3, 7); } while (s % t === 0);
+   const ans = p * (q + r) - (s % t);
+   const mc = buildMC(rng, ans, [(p * (q + r) - s) % t, p * q + r - (s % t), p * (q + r) - s, p * (q + r) + (s % t), p * q + r], true);
+   const e = `int result = ${p} * (${q} + ${r}) - ${s} % ${t};`;
+   return { section: 'Variables & Operators', type: 'mc', text: 'What value does result hold? (Remember operator precedence.)',
+     code: L3(e, `result = ${p} * (${q} + ${r}) - ${s} % ${t}`, `let result = ${p} * (${q} + ${r}) - ${s} % ${t};`),
+     ...mc, explain: `Brackets first: ${q} + ${r} = ${q + r}, so ${p} * ${q + r} = ${p * (q + r)}. Then % binds tighter than -: ${s} % ${t} = ${s % t}. Result: ${p * (q + r)} - ${s % t} = ${ans}.` };
+ },
+ // 3 — integer division and remainder
+ rng => {
+   const x = rng.int(23, 97), d = rng.int(4, 9), q = Math.floor(x / d), r = x % d, ans = q * 10 + r;
+   const mc = buildMC(rng, ans, [r * 10 + q, q + r, q * 10 + r + 1, (q + 1) * 10 + r, q * d + r + q], true);
+   return { section: 'Variables & Operators', type: 'mc', text: 'What is printed? (Integer division and remainder.)',
+     code: L3(`int x = ${x};\nint q = x / ${d};\nint r = x % ${d};\nSystem.out.println(q * 10 + r);`, `x = ${x}\nq = x // ${d}\nr = x % ${d}\nprint(q * 10 + r)`, `let x = ${x};\nlet q = Math.floor(x / ${d});\nlet r = x % ${d};\nconsole.log(q * 10 + r);`),
+     ...mc, explain: `${x} ÷ ${d} = ${q} remainder ${r}, so q = ${q} and r = ${r}. q * 10 + r = ${q * 10} + ${r} = ${ans}.` };
+ },
+ // 4 — compound assignment (short answer)
+ rng => {
+   const n0 = rng.int(5, 15), a = rng.int(3, 9), c = rng.int(2, 4); let m, t;
+   do { m = rng.int(7, 20); t = rng.int(3, 6); } while (m % t === 0);
+   const ans = (n0 + a) * c - (m % t);
+   return { section: 'Variables & Operators', type: 'sa', text: 'What is the final value of n? (Type a number.)',
+     code: L3(`int n = ${n0};\nn += ${a};\nn *= ${c};\nn -= ${m} % ${t};\nSystem.out.println(n);`, `n = ${n0}\nn += ${a}\nn *= ${c}\nn -= ${m} % ${t}\nprint(n)`, `let n = ${n0};\nn += ${a};\nn *= ${c};\nn -= ${m} % ${t};\nconsole.log(n);`),
+     accept: [String(ans)], answerText: String(ans),
+     explain: `n: ${n0} → ${n0 + a} → ${(n0 + a) * c}. On the last line the right side is evaluated first: ${m} % ${t} = ${m % t}, so n = ${(n0 + a) * c} - ${m % t} = ${ans}.` };
+ },
+ // 5 — two separate ifs (the else belongs to the second)
+ rng => {
+   const [d1, d2] = rng.pick([[3,5],[2,3],[2,5],[3,4],[4,5]]), x = rng.int(10, 60), A = x % d1 === 0, B = x % d2 === 0;
+   const labels = ['C only', 'B only', 'A, then B (two lines)', 'A, then C (two lines)'];
+   const correct = A && B ? labels[2] : A ? labels[3] : B ? labels[1] : labels[0];
+   const options = rng.shuffle(labels);
+   return { section: 'Control Structures', type: 'mc', text: 'Which describes the output?',
+     code: L3(`int x = ${x};\nif (x % ${d1} == 0) {\n    System.out.println("A");\n}\nif (x % ${d2} == 0) {\n    System.out.println("B");\n} else {\n    System.out.println("C");\n}`,
+              `x = ${x}\nif x % ${d1} == 0:\n    print("A")\nif x % ${d2} == 0:\n    print("B")\nelse:\n    print("C")`,
+              `let x = ${x};\nif (x % ${d1} === 0) {\n    console.log("A");\n}\nif (x % ${d2} === 0) {\n    console.log("B");\n} else {\n    console.log("C");\n}`),
+     options, answer: options.indexOf(correct),
+     explain: `These are two separate if statements. ${x} ${A ? 'is' : 'is not'} divisible by ${d1} → ${A ? 'prints A' : 'prints nothing'}. The else belongs to the second if: ${x} ${B ? 'is' : 'is not'} divisible by ${d2} → ${B ? 'prints B' : 'prints C'}.` };
+ },
+ // 6 — loop + condition accumulate
+ rng => {
+   const N = rng.int(8, 15), m = rng.int(2, 4); let total = 0, all = 0, non = 0, incl = 0, cnt = 0;
+   for (let i = 0; i < N; i++) { all += i; if (i % m === 0) { total += i; cnt++; } else non += i; }
+   for (let i = 0; i <= N; i++) if (i % m === 0) incl += i;
+   const mc = buildMC(rng, total, [all, non, incl, cnt, total + N], true);
+   return { section: 'Control Structures', type: 'mc', text: 'What is printed?',
+     code: L3(`int total = 0;\nfor (int i = 0; i < ${N}; i++) {\n    if (i % ${m} == 0) {\n        total += i;\n    }\n}\nSystem.out.println(total);`,
+              `total = 0\nfor i in range(${N}):\n    if i % ${m} == 0:\n        total += i\nprint(total)`,
+              `let total = 0;\nfor (let i = 0; i < ${N}; i++) {\n    if (i % ${m} === 0) {\n        total += i;\n    }\n}\nconsole.log(total);`),
+     ...mc, explain: `i runs 0–${N - 1} and only multiples of ${m} are added: ${Array.from({ length: N }, (_, i) => i).filter(i => i % m === 0).join(' + ')} = ${total}.` };
+ },
+ // 7 — break / continue
+ rng => {
+   const M = rng.int(7, 9), s = rng.int(2, 4), b = rng.int(s + 2, M - 1);
+   const seq = (to, skip) => { const o = []; for (let i = 1; i <= to; i++) if (!skip || i !== s) o.push(i); return o.join(' '); };
+   const correct = seq(b - 1, true);
+   const mc = buildMC(rng, correct, [seq(b, true), seq(b - 1, false), seq(M, true), seq(b - 1, true) + ' ' + b], false);
+   return { section: 'Control Structures', type: 'mc', text: 'What is the output? (Numbers are separated by spaces.)',
+     code: L3(`for (int i = 1; i <= ${M}; i++) {\n    if (i == ${s}) continue;\n    if (i == ${b}) break;\n    System.out.print(i + " ");\n}`,
+              `for i in range(1, ${M + 1}):\n    if i == ${s}:\n        continue\n    if i == ${b}:\n        break\n    print(i, end=" ")`,
+              `let out = "";\nfor (let i = 1; i <= ${M}; i++) {\n    if (i === ${s}) continue;\n    if (i === ${b}) break;\n    out += i + " ";\n}\nconsole.log(out);`),
+     ...mc, explain: `continue skips just i = ${s}. break stops the whole loop when i reaches ${b} (before printing it). Printed: ${correct}.` };
+ },
+ // 8 — parameters are copies; return value
+ rng => {
+   const fn = rng.pick(['f', 'g', 'h']), p = rng.int(1, 5), q = rng.int(2, 4), y = rng.int(2, 9), z = (y + p) * q;
+   const correct = `${y} ${z}`;
+   const mc = buildMC(rng, correct, [`${y + p} ${z}`, `${y} ${y * q + p}`, `${y + p} ${y + p}`, `${y} ${y * q}`, `${y + p} ${y * q}`], false);
+   return { section: 'Functions & Scope', type: 'mc', text: 'What is printed?',
+     code: L3(`static int ${fn}(int x) {\n    x = x + ${p};\n    return x * ${q};\n}\n\nint y = ${y};\nint z = ${fn}(y);\nSystem.out.println(y + " " + z);`,
+              `def ${fn}(x):\n    x = x + ${p}\n    return x * ${q}\n\ny = ${y}\nz = ${fn}(y)\nprint(y, z)`,
+              `function ${fn}(x) {\n    x = x + ${p};\n    return x * ${q};\n}\n\nlet y = ${y};\nlet z = ${fn}(y);\nconsole.log(y, z);`),
+     ...mc, explain: `The parameter x is a copy of y, so y stays ${y}. Inside ${fn}: x becomes ${y + p}, and the function returns ${y + p} * ${q} = ${z}.` };
+ },
+ // 9 — scope: shadowing OR modifying a global
+ rng => {
+   const c0 = rng.int(0, 9);
+   if (rng.f() < .5) {
+     const v = rng.int(2, 9), mc = buildMC(rng, c0, [v + 1, v, c0 + 1, 'Error'], false);
+     return { section: 'Functions & Scope', type: 'mc', text: 'What is printed after add() runs?',
+       code: L3(`static int count = ${c0};\n\nstatic void add() {\n    int count = ${v};\n    count++;\n}\n\nadd();\nSystem.out.println(count);`,
+                `count = ${c0}\n\ndef add():\n    count = ${v}\n    count += 1\n\nadd()\nprint(count)`,
+                `let count = ${c0};\n\nfunction add() {\n    let count = ${v};\n    count++;\n}\n\nadd();\nconsole.log(count);`),
+       ...mc, explain: `The count inside add() is a brand-new local variable that shadows the outer one. The outer count is never touched, so it is still ${c0}.` };
+   }
+   const step = rng.int(2, 5), calls = rng.int(2, 3), ans = c0 + calls * step;
+   const mc = buildMC(rng, ans, [c0, c0 + step, c0 + (calls + 1) * step, c0 + calls], true);
+   return { section: 'Functions & Scope', type: 'mc', text: `What is printed after add() has been called ${calls} times?`,
+     code: L3(`static int count = ${c0};\n\nstatic void add() {\n    count += ${step};\n}\n\n${'add();\n'.repeat(calls)}System.out.println(count);`,
+              `count = ${c0}\n\ndef add():\n    global count\n    count += ${step}\n\n${'add()\n'.repeat(calls)}print(count)`,
+              `let count = ${c0};\n\nfunction add() {\n    count += ${step};\n}\n\n${'add();\n'.repeat(calls)}console.log(count);`),
+     ...mc, explain: `This add() changes the one shared (global) count. Starting at ${c0}, adding ${step} ${calls} times gives ${c0} + ${calls * step} = ${ans}.` };
+ },
+ // 10 — array indexing from the end
+ rng => {
+   const len = rng.int(5, 7), arr = rndMatrix(rng, 1, len, 3, 60, true)[0], k = rng.int(1, 3), idx = len - k, ans = arr[idx];
+   const mc = buildMC(rng, ans, arr.filter(v => v !== ans), true);
+   return { section: 'Arrays & Matrices', type: 'mc', text: 'What is printed? (Think about length and zero-based indexing.)',
+     code: L3(`int[] arr = {${arr.join(', ')}};\nSystem.out.println(arr[arr.length - ${k}]);`, `arr = [${arr.join(', ')}]\nprint(arr[len(arr) - ${k}])`, `const arr = [${arr.join(', ')}];\nconsole.log(arr[arr.length - ${k}]);`),
+     ...mc, explain: `The length is ${len}, so valid indexes are 0–${len - 1} (accessing index ${len} would be out of bounds). Index ${len} - ${k} = ${idx} holds ${ans}.` };
+ },
+ // 11 — 2D access, row then column
+ rng => {
+   const R = rng.int(3, 4), C = rng.int(3, 4), m = rndMatrix(rng, R, C, 1, 40, true); let r, c;
+   do { r = rng.int(1, R - 1); c = rng.int(0, C - 1); } while (r === c);
+   const ans = m[r][c], others = [].concat(...m).filter(v => v !== ans);
+   const near = [m[r][(c + 1) % C], m[(r + 1) % R][c], m[r - 1][c], m[r][(c + C - 1) % C]].filter(v => v !== ans);
+   const mc = buildMC(rng, ans, (near.concat(others)), true);
+   return { section: 'Arrays & Matrices', type: 'mc', text: `What does m[${r}][${c}] give? (row first, then column)`,
+     code: L3(`int[][] m = ${J2D(m)};\nSystem.out.println(m[${r}][${c}]);`, `m = ${L2D(m)}\nprint(m[${r}][${c}])`, `const m = ${L2D(m)};\nconsole.log(m[${r}][${c}]);`),
+     ...mc, explain: `m[${r}] is row ${r + 1}: [${m[r].join(', ')}]; index ${c} in that row is ${ans}.` };
+ },
+ // 12 — matrix traversal (short answer)
+ rng => {
+   const m = rndMatrix(rng, 3, 3, 1, 9, false), mode = rng.pick(['main', 'anti', 'middle']);
+   const expr = { main: 'm[i][i]', anti: 'm[i][2 - i]', middle: 'm[i][1]' }[mode];
+   const cells = [0, 1, 2].map(i => mode === 'main' ? m[i][i] : mode === 'anti' ? m[i][2 - i] : m[i][1]), ans = cells.reduce((a, b) => a + b, 0);
+   const what = { main: 'the main diagonal', anti: 'the anti-diagonal (top-right to bottom-left)', middle: 'the middle column' }[mode];
+   return { section: 'Arrays & Matrices', type: 'sa', text: 'What is printed? (Type a number.)',
+     code: L3(`int[][] m = ${J2D(m)};\nint total = 0;\nfor (int i = 0; i < 3; i++) {\n    total += ${expr};\n}\nSystem.out.println(total);`,
+              `m = ${L2D(m)}\ntotal = 0\nfor i in range(3):\n    total += ${expr}\nprint(total)`,
+              `const m = ${L2D(m)};\nlet total = 0;\nfor (let i = 0; i < 3; i++) {\n    total += ${expr};\n}\nconsole.log(total);`),
+     accept: [String(ans)], answerText: String(ans),
+     explain: `This walks ${what}: ${cells.join(' + ')} = ${ans}.` };
+ }
+];
+function buildQuestions(rng) {
+  const qs = TEMPLATES.map((t, i) => Object.assign(t(rng), { id: i + 1 }));
+  return rng.shuffle(qs);
+}
+
+/* =========================================================
+   CODING TASKS — parameters differ per student (divisors, range, multiplier, matrices)
+   ========================================================= */
+const gcd = (a, b) => b ? gcd(b, a % b) : a, lcm = (a, b) => a / gcd(a, b) * b;
+function genParams(rng) {
+  const [d1, d2] = rng.pick([[3,5],[3,7],[2,5],[4,5],[2,7],[5,7],[3,4]]), n = rng.pick([30, 40, 50, 60]), k = rng.pick([2, 3, 4, 5]);
+  const diag = m => { let a = 0, b = 0; const z = m.length; for (let i = 0; i < z; i++) { a += m[i][i]; b += m[i][z - 1 - i]; } return Math.abs(a - b); };
+  let demo; do { demo = rndMatrix(rng, 3, 3, -5, 15, false); } while (diag(demo) === 0);
+  const r4 = rndMatrix(rng, 4, 4, -5, 15, false), r5 = rndMatrix(rng, 5, 5, -5, 15, false);
+  const arr = () => Array.from({ length: 8 }, () => rng.int(-9, 30)), ra = [arr(), arr()];
+  return { A: { d1, d2, n }, B: { k, rand: ra.map(a => [a, a.filter(x => x % 2 === 0).map(x => x * k)]) }, C: { demo, demoWant: diag(demo), rand: [[r4, diag(r4)], [r5, diag(r5)]] } };
+}
+const fbSeq = (P, upto) => Array.from({ length: upto }, (_, i) => { const v = i + 1; return v % P.d1 === 0 && v % P.d2 === 0 ? 'FizzBuzz' : v % P.d1 === 0 ? 'Fizz' : v % P.d2 === 0 ? 'Buzz' : String(v); });
+const matHTML = m => m.map((r, i) => `<div>${i === 0 ? '[[' : '&nbsp;['}${r.map(v => String(v).padStart(2, ' ')).join(', ')}${i === m.length - 1 ? ']]' : '],'}</div>`).join('');
+const TASKS = {
+  A: { title:'Task A · FizzBuzz', level:'Baseline', max:15, color:'emerald',
+       fn:{ java:'fizzBuzz', python:'fizz_buzz', javascript:'fizzBuzz' },
+       desc: (f, P) => `<p>Write <code class="text-cyan-300">${f}()</code> that returns a list of <b>${P.n} strings</b> for the numbers 1 to ${P.n}:</p>
+         <ul class="list-disc pl-5 mt-2 space-y-1"><li>multiples of <b>${P.d1}</b> → <code class="text-cyan-300">"Fizz"</code></li><li>multiples of <b>${P.d2}</b> → <code class="text-cyan-300">"Buzz"</code></li><li>multiples of <b>both</b> ${P.d1} and ${P.d2} → <code class="text-cyan-300">"FizzBuzz"</code></li><li>otherwise → the number as text</li></ul>
+         <p class="mt-2 text-slate-400 text-sm">Starts: ${fbSeq(P, 12).join(', ')} …</p>` },
+  B: { title:'Task B · Filter & Multiply', level:'Intermediate', max:20, color:'sky',
+       fn:{ java:'filterAndDouble', python:'filter_and_double', javascript:'filterAndDouble' },
+       desc: (f, P) => `<p>Write <code class="text-cyan-300">${f}(nums)</code> that returns a <b>new</b> list containing only the <b>even</b> numbers from <code>nums</code>, each <b>multiplied by ${P.k}</b>. Zero counts as even.</p>
+         <div class="mt-2 text-sm font-mono text-slate-300 space-y-1"><div>[1, 2, 3, 4, 5, 6] → [${[2, 4, 6].map(v => v * P.k).join(', ')}]</div><div>[7, 9, 11] → []</div><div>[] → []</div></div>` },
+  C: { title:'Task C · Diagonal Difference', level:'Advanced', max:25, color:'violet',
+       fn:{ java:'diagonalDifference', python:'diagonal_difference', javascript:'diagonalDifference' },
+       desc: (f, P) => { const m = P.demo, a = [0, 1, 2].map(i => m[i][i]), b = [0, 1, 2].map(i => m[i][2 - i]), sum = x => x.reduce((p, q) => p + q, 0); return `<p>Write <code class="text-cyan-300">${f}(matrix)</code> for an <b>n × n</b> integer matrix. Return the <b>absolute difference</b> between the sum of the main diagonal (top-left → bottom-right) and the sum of the anti-diagonal (top-right → bottom-left).</p>
+         <div class="mt-2 text-sm font-mono text-slate-300 space-y-1">${matHTML(m)}<div class="text-slate-400">main = ${a.join(' + ')} = ${sum(a)} · anti = ${b.join(' + ')} = ${sum(b)} → |${sum(a)} − ${sum(b)}| = <b class="text-white">${P.demoWant}</b></div></div>`; } }
+};
+const STARTERS = {
+ A: {
+  java: P => `import java.util.*;\n\npublic class Solution {\n    // Return ${P.n} Strings for 1..${P.n}: "Fizz" (multiple of ${P.d1}), "Buzz" (multiple of ${P.d2}),\n    // "FizzBuzz" (both), otherwise the number as text.\n    static List<String> fizzBuzz() {\n        List<String> out = new ArrayList<>();\n        // your code here\n        return out;\n    }\n}\n`,
+  python: P => `def fizz_buzz():\n    # Return a list of ${P.n} strings for 1..${P.n}\n    out = []\n    # your code here\n    return out\n`,
+  javascript: P => `function fizzBuzz() {\n  // Return an array of ${P.n} strings for 1..${P.n}\n  // (printing each one with console.log is also accepted)\n  const out = [];\n  // your code here\n  return out;\n}\n` },
+ B: {
+  java: P => `import java.util.*;\n\npublic class Solution {\n    // Return a NEW list: only the even numbers, each multiplied by ${P.k}.\n    static List<Integer> filterAndDouble(List<Integer> nums) {\n        List<Integer> result = new ArrayList<>();\n        // your code here\n        return result;\n    }\n}\n`,
+  python: P => `def filter_and_double(nums):\n    # Return a NEW list: only the even numbers, each multiplied by ${P.k}\n    result = []\n    # your code here\n    return result\n`,
+  javascript: P => `function filterAndDouble(nums) {\n  // Return a NEW array: only the even numbers, each multiplied by ${P.k}\n  const result = [];\n  // your code here\n  return result;\n}\n` },
+ C: {
+  java: P => `public class Solution {\n    // |sum(main diagonal) - sum(anti-diagonal)| of an n x n matrix\n    static int diagonalDifference(int[][] matrix) {\n        int result = 0;\n        // your code here\n        return result;\n    }\n}\n`,
+  python: P => `def diagonal_difference(matrix):\n    # |sum(main diagonal) - sum(anti-diagonal)| of an n x n matrix\n    result = 0\n    # your code here\n    return result\n`,
+  javascript: P => `function diagonalDifference(matrix) {\n  // |sum(main diagonal) - sum(anti-diagonal)| of an n x n matrix\n  let result = 0;\n  // your code here\n  return result;\n}\n` }
+};
+const starterCode = (t, lang) => STARTERS[t][lang || S.lang](S.params[t]);
+
+/* ---------- JavaScript test-suite (runs the student's real code) ----------
+   NOTE: must stay fully self-contained — it is serialised into a Web Worker. */
+function runJsTests(task, code, P) {
+  const logs = [];
+  const fakeConsole = { log: (...a) => logs.push(a.join(' ')), error(){}, warn(){}, info(){} };
+  const names = { A: 'fizzBuzz', B: 'filterAndDouble', C: 'diagonalDifference' };
+  let fn;
+  try {
+    fn = new Function('console', code + '\n;return (typeof ' + names[task] + ' === "function") ? ' + names[task] + ' : undefined;')(fakeConsole);
+  } catch (e) { return { error: 'Error in your code: ' + e.message, tests: [] }; }
+  if (!fn) return { error: 'Function ' + names[task] + '() was not found. Keep the function name from the starter code.', tests: [] };
+  const T = [];
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const add = (name, f) => {
+    try { const r = f(); T.push({ label: name, pass: !!r.pass, detail: r.detail || '' }); }
+    catch (e) { T.push({ label: name, pass: false, detail: 'Threw: ' + e.message }); }
+  };
+  if (task === 'A') {
+    const d1 = P.d1, d2 = P.d2, n = P.n;
+    let lines;
+    try {
+      const ret = fn();
+      if (Array.isArray(ret)) lines = ret.map(String);
+      else { lines = logs.slice(); if (lines.length === 1 && lines[0].indexOf('\n') > -1) lines = lines[0].split('\n'); }
+    } catch (e) { return { error: 'Your function threw: ' + e.message, tests: [] }; }
+    const expectAt = (pred, want) => {
+      const bad = [];
+      for (let i = 1; i <= n; i++) if (pred(i) && lines[i - 1] !== want(i)) bad.push('#' + i + ' → ' + JSON.stringify(lines[i - 1]));
+      return { pass: lines.length === n && bad.length === 0, detail: bad.length ? 'Wrong at ' + bad.slice(0, 3).join(', ') : '' };
+    };
+    add('Returns exactly ' + n + ' items', () => ({ pass: lines.length === n, detail: 'Got ' + lines.length + ' items' }));
+    add('Plain numbers (neither ' + d1 + ' nor ' + d2 + ')', () => expectAt(i => i % d1 && i % d2, i => String(i)));
+    add('Multiples of ' + d1 + ' only → "Fizz"', () => expectAt(i => i % d1 === 0 && i % d2 !== 0, () => 'Fizz'));
+    add('Multiples of ' + d2 + ' only → "Buzz"', () => expectAt(i => i % d2 === 0 && i % d1 !== 0, () => 'Buzz'));
+    add('Multiples of both ' + d1 + ' and ' + d2 + ' → "FizzBuzz"', () => expectAt(i => i % d1 === 0 && i % d2 === 0, () => 'FizzBuzz'));
+  }
+  if (task === 'B') {
+    const k = P.k;
+    const eq = (label, input, want) => add(label, () => { const got = fn(input.slice()); return { pass: Array.isArray(got) && same(got, want), detail: 'Got ' + JSON.stringify(got) + ', expected ' + JSON.stringify(want) }; });
+    eq('Example [1..6] → ' + JSON.stringify([2 * k, 4 * k, 6 * k]), [1,2,3,4,5,6], [2 * k, 4 * k, 6 * k]);
+    eq('Empty list → []', [], []);
+    eq('No evens [7, 9, 11] → []', [7,9,11], []);
+    eq('Zero and negatives [0, -2, -3, 5] → ' + JSON.stringify([0, -2 * k]), [0,-2,-3,5], [0, -2 * k]);
+    eq('Mixed [10, 15, 20, 25, 30] → ' + JSON.stringify([10 * k, 20 * k, 30 * k]), [10,15,20,25,30], [10 * k, 20 * k, 30 * k]);
+    P.rand.forEach((r, i) => eq('Random list #' + (i + 1) + ' ' + JSON.stringify(r[0]), r[0], r[1]));
+    add('Does not modify the input list', () => { const a = [1,2,3,4]; const got = fn(a); return { pass: same(a, [1,2,3,4]) && Array.isArray(got) && got !== a, detail: 'Input afterwards: ' + JSON.stringify(a) }; });
+  }
+  if (task === 'C') {
+    const eq = (label, m, want) => add(label, () => { const got = fn(JSON.parse(JSON.stringify(m))); return { pass: got === want, detail: 'Got ' + JSON.stringify(got) + ', expected ' + want }; });
+    eq('Worked example (3×3) → ' + P.demoWant, P.demo, P.demoWant);
+    eq('2×2 with equal diagonals → 0', [[1,2],[3,4]], 0);
+    eq('1×1 matrix → 0', [[1]], 0);
+    eq('Anti-diagonal larger (needs abs) → 15', [[1,9],[8,1]], 15);
+    P.rand.forEach((r, i) => eq('Random ' + r[0].length + '×' + r[0].length + ' matrix → ' + r[1], r[0], r[1]));
+  }
+  return { error: null, tests: T };
+}
+
+function runInWorker(task, code, P) {
+  return new Promise(resolve => {
+    try {
+      const src = '(' + runJsTests.toString() + ')';
+      const blob = new Blob(['self.onmessage=function(e){var f=' + src + ';var r;try{r=f(e.data.task,e.data.code,e.data.P);}catch(err){r={error:String(err),tests:[]};}self.postMessage(r);};'], { type: 'application/javascript' });
+      const url = URL.createObjectURL(blob);
+      const worker = new Worker(url);
+      const timer = setTimeout(() => { worker.terminate(); URL.revokeObjectURL(url); resolve({ error: 'Timed out after 4 seconds — check for an infinite loop.', tests: [] }); }, 4000);
+      worker.onmessage = e => { clearTimeout(timer); worker.terminate(); URL.revokeObjectURL(url); resolve(e.data); };
+      worker.onerror = () => { clearTimeout(timer); worker.terminate(); URL.revokeObjectURL(url); resolve(runJsTests(task, code, P)); };
+      worker.postMessage({ task, code, P });
+    } catch (err) { resolve(runJsTests(task, code, P)); }
+  });
+}
+
+/* ---------- Java / Python: robust pattern checks (comments stripped) ---------- */
+function stripComments(code, lang) {
+  if (lang === 'python') return code.replace(/"""[\s\S]*?"""|'''[\s\S]*?'''/g, '').replace(/#.*$/gm, '');
+  return code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+}
+const mainDiag = c => /\[\s*(\w+)\s*\]\s*\[\s*\1\s*\]/.test(c) || /\bi\s*==\s*j\b|\bj\s*==\s*i\b/.test(c) || /enumerate\s*\(/.test(c);
+const antiDiag = c => /\]\s*\[[^\[\]]*-[^\[\]]*\]|\[[^\[\]]*-[^\[\]]*\]\s*\[/.test(c) || /\b[ij]\s*\+\s*[ij]\s*==\s*\w+\s*-\s*1/.test(c);
+function getChecks(t, lang, P) {
+  const py = lang === 'python', R = (s, f) => new RegExp(s, f);
+  if (t === 'A') {
+    const { d1, d2, n } = P, l = lcm(d1, d2);
+    const both = c => (/FizzBuzz/.test(c) && (R('%\\s*' + l + '\\b').test(c) || R('%\\s*' + d1 + '\\b[^\\n]*(&&|\\band\\b)[^\\n]*%\\s*' + d2 + '\\b').test(c) || R('%\\s*' + d2 + '\\b[^\\n]*(&&|\\band\\b)[^\\n]*%\\s*' + d1 + '\\b').test(c) || R('if[^\\n]*%\\s*' + d1 + '[^\\n]*\\n[^\\n]*if[^\\n]*%\\s*' + d2).test(c) || R('if[^\\n]*%\\s*' + d2 + '[^\\n]*\\n[^\\n]*if[^\\n]*%\\s*' + d1).test(c)))
+      || /(["']Fizz["']\s*\+|\+\s*=\s*["']Fizz["']|\+\s*["']Buzz["'])/.test(c);
+    return [
+      { label: 'Loops over the numbers 1 to ' + n, pts: 3, test: c => py ? (R('range\\s*\\(\\s*1\\s*,\\s*' + (n + 1) + '\\s*\\)').test(c) || R('while[^\\n]*(<=\\s*' + n + '|<\\s*' + (n + 1) + ')').test(c)) : ((/\b(for|while)\b/.test(c) && R('(<=\\s*' + n + '\\b|<\\s*' + (n + 1) + '\\b)').test(c)) || R('rangeClosed\\s*\\(\\s*1\\s*,\\s*' + n).test(c)) },
+      { label: 'Tests divisibility by ' + d1 + ' (% ' + d1 + ')', pts: 2, test: c => R('%\\s*' + d1 + '\\b').test(c) },
+      { label: 'Tests divisibility by ' + d2 + ' (% ' + d2 + ')', pts: 2, test: c => R('%\\s*' + d2 + '\\b').test(c) },
+      { label: 'Uses the strings "Fizz" and "Buzz"', pts: 2, test: c => py ? (/["']Fizz["']/.test(c) && /["']Buzz["']/.test(c)) : (/"Fizz"/.test(c) && /"Buzz"/.test(c)) },
+      { label: 'Handles multiples of both (FizzBuzz) correctly', pts: 3, test: both },
+      { label: 'Outputs or collects every result', pts: 3, test: c => py ? /\bprint\s*\(|\.append\s*\(|\byield\b|\[[^\]]*\bfor\b/.test(c) : /System\.out\.print(ln)?\s*\(|\.add\s*\(/.test(c) }
+    ];
+  }
+  if (t === 'B') {
+    const k = P.k;
+    return [
+      { label: py ? 'Defines filter_and_double(...)' : 'Defines filterAndDouble(...)', pts: 3, test: c => py ? /def\s+(filter_and_double|filterAndDouble)\s*\(/.test(c) : /\bfilterAndDouble\s*\(/.test(c) },
+      { label: py ? 'Loops (or comprehends) over the input' : 'Loops (or streams) over the input', pts: 4, test: c => py ? /\bfor\b|\bwhile\b|\bmap\s*\(|\bfilter\s*\(/.test(c) : /\b(for|while)\b|\.stream\s*\(|forEach/.test(c) },
+      { label: 'Checks for even numbers (% 2 == 0)', pts: 5, test: c => py ? /%\s*2\s*==\s*0|%\s*2\s*!=\s*1|not\s+\w+\s*%\s*2|&\s*1\s*\)?\s*==\s*0/.test(c) : /%\s*2\s*==\s*0|%\s*2\s*!=\s*1|&\s*1\s*\)?\s*==\s*0/.test(c) },
+      { label: 'Multiplies by ' + k, pts: 5, test: c => R('\\*\\s*' + k + '\\b|\\b' + k + '\\s*\\*').test(c) || (k === 2 && /<<\s*1/.test(c)) },
+      { label: 'Builds and returns a result list', pts: 3, test: c => py ? (/\.append\s*\(|\[[^\]]*\bfor\b[^\]]*\]|\+\s*=\s*\[|\bmap\s*\(|\.extend\s*\(|\byield\b/.test(c) && /\breturn\b|\byield\b/.test(c)) : (/\.add\s*\(|\.collect\s*\(|\.toArray\s*\(/.test(c) && /\breturn\b/.test(c)) }
+    ];
+  }
+  return [
+    { label: py ? 'Defines diagonal_difference(...)' : 'Defines diagonalDifference(...)', pts: 3, test: c => py ? /def\s+(diagonal_difference|diagonalDifference)\s*\(/.test(c) : /\bdiagonalDifference\s*\(/.test(c) },
+    { label: py ? 'Uses the matrix size (len)' : 'Uses the matrix size (length)', pts: 3, test: c => py ? /\blen\s*\(/.test(c) : /\.length|\bsize\s*\(/.test(c) },
+    { label: 'Sums the main diagonal  [i][i]', pts: 7, test: mainDiag },
+    { label: 'Sums the anti-diagonal  [i][n-1-i]', pts: 7, test: antiDiag },
+    { label: py ? 'Returns an absolute value (abs)' : 'Returns an absolute value (Math.abs)', pts: 5, test: c => /\babs\s*\(/.test(c) }
+  ];
+}
+
+/* =========================================================
+   STATE + HELPERS
+   ========================================================= */
+const S = { phase:'register', prevPhase:'register', name:'', lang:'', qi:0, answers:[], code:{A:'',B:'',C:''}, task:'A', runs:{}, startedAt:null, result:null, pasted:[], stageRes:{}, blurs:0, cur:'quiz', deadline:0, timerStage:'', finishing:false, seed:0, questions:[], params:null };
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const r1 = n => Math.round(n * 10) / 10;
+const KW = {
+  java:'int|double|boolean|String|static|void|public|class|return|if|else|for|while|break|continue|new|true|false|null|final|char|long|List|ArrayList|import',
+  python:'def|return|if|elif|else|for|while|break|continue|in|range|and|or|not|True|False|None|print|len|import|from|pass|lambda|abs',
+  javascript:'let|const|var|function|return|if|else|for|while|break|continue|new|true|false|null|undefined|of|in|console|Math'
+};
+function highlight(code, lang) {
+  const cm = lang === 'python' ? '#.*' : '\\/\\/.*';
+  const re = new RegExp('(' + cm + ')|("(?:[^"\\\\]|\\\\.)*"|\'(?:[^\'\\\\]|\\\\.)*\')|\\b(\\d+(?:\\.\\d+)?)\\b|\\b([A-Za-z_]\\w*)\\b', 'g');
+  const kw = new Set(KW[lang].split('|'));
+  let out = '', last = 0, m;
+  while ((m = re.exec(code))) {
+    out += esc(code.slice(last, m.index));
+    if (m[1]) out += `<span class="tk-c">${esc(m[1])}</span>`;
+    else if (m[2]) out += `<span class="tk-s">${esc(m[2])}</span>`;
+    else if (m[3]) out += `<span class="tk-n">${esc(m[3])}</span>`;
+    else if (kw.has(m[4])) out += `<span class="tk-k">${esc(m[4])}</span>`;
+    else out += esc(m[4]);
+    last = re.lastIndex;
+  }
+  return out + esc(code.slice(last));
+}
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.remove('hidden');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.add('hidden'), 2200);
+}
+function copyText(txt, okMsg) {
+  const done = () => toast(okMsg || 'Copied!');
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(done, () => fallbackCopy(txt, done));
+  else fallbackCopy(txt, done);
+}
+function fallbackCopy(txt, done) {
+  const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('Copy failed — select and copy manually'); }
+  document.body.removeChild(ta);
+}
+const STAGE_ORDER = ['quiz', 'A', 'B', 'C'];
+const LIMITS = { quiz: 15 * 60, A: 10 * 60, B: 15 * 60, C: 20 * 60 };   // seconds per stage — edit freely
+const guardOn = () => ['quiz', 'coding', 'stageResult'].includes(S.phase);
+function stepIndex() {
+  if (S.phase === 'register') return 0;
+  if (S.phase === 'quiz') return 1;
+  if (S.phase === 'coding') return 2 + ['A','B','C'].indexOf(S.task);
+  if (S.phase === 'stageResult') return 1 + STAGE_ORDER.indexOf(S.cur);
+  if (S.phase === 'results') return 5;
+  return -1;
+}
+function renderStepper() {
+  const steps = ['Register','Quiz','Task A','Task B','Task C','Results'], idx = stepIndex();
+  $('#stepper').innerHTML = steps.map((s, i) => {
+    const cls = i === idx ? 'bg-indigo-500/25 text-white border-indigo-400' : i < idx ? 'text-emerald-300 border-emerald-500/30' : 'text-slate-500 border-white/10';
+    return `<span class="px-2.5 py-1 rounded-full border ${cls}">${i < idx ? '✓ ' : ''}${s}</span>`;
+  }).join('');
+  const b = $('#instrBtn'); if (b) b.style.display = guardOn() ? 'none' : '';
+}
+function go(phase) { S.phase = phase; document.body.classList.toggle('guard', guardOn()); renderStepper(); render(); window.scrollTo(0, 0); }
+function render() {
+  ({ register: renderRegister, quiz: renderQuiz, coding: renderCoding, stageResult: renderStageResult, results: renderResults, instructor: renderInstructor })[S.phase]();
+  saveState();
+}
+window.addEventListener('pagehide', () => { window.__leaving = true; });
+window.addEventListener('pageshow', () => { window.__leaving = false; });
+
+/* ---------- integrity guard: no copy / cut / paste / drop / right-click during the test ---------- */
+const inField = t => { const el = t && (t.nodeType === 1 ? t : t.parentElement); return !!(el && el.closest && el.closest('input,textarea')); };
+['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'drop', 'selectstart'].forEach(ev => document.addEventListener(ev, e => {
+  if (!guardOn() || window.__allowCopy) return;
+  if (ev === 'selectstart' && inField(e.target)) return;
+  e.preventDefault();
+  if (ev === 'copy' || ev === 'cut' || ev === 'paste') toast('Copy & paste are disabled during the assessment');
+}, true));
+document.addEventListener('beforeinput', e => { if (guardOn() && /FromPaste|FromDrop|FromYank/.test(e.inputType || '')) { e.preventDefault(); toast('Pasting is disabled during the assessment'); } }, true);
+document.addEventListener('keydown', e => {
+  if (!guardOn()) return;
+  const k = (e.key || '').toLowerCase(), mod = e.ctrlKey || e.metaKey;
+  if ((mod && ['c','x','v','u','s','p'].includes(k)) || (mod && e.shiftKey && ['i','j','c'].includes(k)) || e.key === 'F12' || (e.shiftKey && e.key === 'Insert') || (mod && k === 'a' && !inField(e.target))) e.preventDefault();
+}, true);
+document.addEventListener('visibilitychange', () => { if (document.hidden && !window.__leaving && (S.phase === 'quiz' || S.phase === 'coding')) { S.blurs++; saveSoon(); } });
+
+/* ---------- persistence: survive refresh / accidental close (localStorage) ---------- */
+const SAVE_KEY = 'cc_session_v1';
+const PERSIST = ['phase','name','lang','qi','answers','code','task','runs','startedAt','result','stageRes','blurs','cur','deadline','timerStage','seed','questions','params'];
+function saveState() {
+  if (S.phase === 'instructor') return;
+  try { const o = {}; PERSIST.forEach(k => o[k] = S[k]); localStorage.setItem(SAVE_KEY, JSON.stringify(o)); } catch (e) {}
+}
+let _saveT = null;
+function saveSoon() { clearTimeout(_saveT); _saveT = setTimeout(saveState, 400); }
+function clearState() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+function restoreState() {
+  let o = null; try { o = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) {}
+  if (!o || !['quiz','coding','stageResult','results'].includes(o.phase) || !o.questions || !o.questions.length || !o.params) return false;
+  PERSIST.forEach(k => { if (o[k] !== undefined && o[k] !== null) S[k] = o[k]; });
+  S.finishing = false; QUESTIONS = S.questions; return true;
+}
+
+/* ---------- stage timer ---------- */
+let TIMER = null;
+const fmt = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+function timerClass(left) {
+  return 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border font-mono text-sm font-semibold ' +
+    (left <= 60 ? 'border-rose-500/60 bg-rose-500/15 text-rose-300 animate-pulse' : left <= 180 ? 'border-amber-500/50 bg-amber-500/10 text-amber-300' : 'border-white/15 bg-white/5 text-slate-200');
+}
+function timerHTML() { const left = Math.max(0, Math.ceil((S.deadline - Date.now()) / 1000)); return `<span id="timer" class="${timerClass(left)}">⏱ ${fmt(left)}</span>`; }
+function startTimer(stage) { stopTimer(); S.timerStage = stage; S.deadline = Date.now() + LIMITS[stage] * 1000; TIMER = setInterval(tick, 250); saveState(); }
+function stopTimer() { if (TIMER) clearInterval(TIMER); TIMER = null; }
+function tick() {
+  const left = Math.max(0, Math.ceil((S.deadline - Date.now()) / 1000)), el = $('#timer');
+  if (el) { el.textContent = '⏱ ' + fmt(left); el.className = timerClass(left); }
+  if (left <= 0) { stopTimer(); onTimeUp(); }
+}
+function onTimeUp() {
+  toast("Time's up — submitting automatically");
+  if (S.timerStage === 'quiz') finishQuiz(true); else finishTask(S.timerStage, true);
+}
+
+/* =========================================================
+   SCREEN 1 — REGISTRATION
+   ========================================================= */
+function renderRegister() {
+  $('#screen').innerHTML = `
+  <section class="fade-in grid lg:grid-cols-5 gap-8 items-center py-4">
+    <div class="lg:col-span-3">
+      <span class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-200">Month-3 triage assessment</span>
+      <h1 class="mt-4 text-4xl sm:text-5xl font-extrabold text-white leading-tight">Show what you know.<br><span class="bg-gradient-to-r from-indigo-400 to-cyan-300 bg-clip-text text-transparent">Find your track.</span></h1>
+      <p class="mt-4 text-slate-300 max-w-xl">Twelve quick logic questions, then three hands-on coding tasks. You'll get an instant score and a personalised learning track.</p>
+      <div class="mt-6 grid sm:grid-cols-3 gap-3 max-w-xl text-sm">
+        <div class="card p-3"><div class="text-2xl font-bold text-white">12</div><div class="text-slate-400">concept questions</div></div>
+        <div class="card p-3"><div class="text-2xl font-bold text-white">3</div><div class="text-slate-400">coding tasks</div></div>
+        <div class="card p-3"><div class="text-2xl font-bold text-white">~45</div><div class="text-slate-400">minutes</div></div>
+      </div>
+      <div class="mt-5 card p-4 max-w-xl text-xs text-slate-300 space-y-1.5">
+        <div class="font-semibold text-white text-sm mb-1">Ground rules</div>
+        <div>⏱ Every stage is timed — Quiz ${LIMITS.quiz / 60} min · Task A ${LIMITS.A / 60} min · Task B ${LIMITS.B / 60} min · Task C ${LIMITS.C / 60} min. When a timer ends, your work is submitted automatically.</div>
+        <div>🚫 Copy, cut, paste, drag-and-drop and right-click are disabled, and leaving this browser tab is recorded.</div>
+        <div>✅ After each stage you'll see your score and what you missed, then continue when you're ready. Refreshing is safe: your progress is saved on this device and the timer keeps running while you're away.</div>
+      </div>
+    </div>
+    <div class="lg:col-span-2 card p-6">
+      <label class="text-sm font-semibold text-white">Your full name</label>
+      <input id="nameInput" value="${esc(S.name)}" oninput="S.name=this.value" onkeydown="if(event.key==='Enter')startAssessment()" maxlength="60" placeholder="e.g. Ada Okafor" autocomplete="off"
+        class="mt-2 w-full rounded-lg bg-slate-900/80 border border-white/15 px-3 py-2.5 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/30">
+      <div class="mt-5 text-sm font-semibold text-white">Choose your language</div>
+      <p class="text-xs text-slate-400">Code snippets and your answers will use this language.</p>
+      <div class="mt-3 space-y-2">
+        ${Object.entries(LANGS).map(([k, v]) => `
+          <button type="button" onclick="pickLang('${k}')" class="lang-card ${S.lang === k ? 'active' : ''}">
+            <span class="text-2xl">${v.icon}</span>
+            <span><span class="block font-semibold text-white">${v.label}</span><span class="block text-xs text-slate-400">${v.note}</span></span>
+          </button>`).join('')}
+      </div>
+      <button onclick="startAssessment()" class="btn btn-primary w-full mt-6">Start assessment →</button>
+    </div>
+  </section>`;
+}
+function pickLang(k) { S.lang = k; renderRegister(); const i = $('#nameInput'); if (i && !S.name) i.focus(); }
+function startAssessment() {
+  S.name = S.name.trim();
+  if (S.name.length < 2) return toast('Please enter your name');
+  if (!S.lang) return toast('Please choose a language');
+  S.qi = 0; S.answers = []; S.runs = {}; S.task = 'A'; S.result = null; S.stageRes = {}; S.blurs = 0; S.finishing = false; S.startedAt = Date.now();
+  S.seed = (typeof crypto !== 'undefined' && crypto.getRandomValues) ? crypto.getRandomValues(new Uint32Array(1))[0] : Math.floor(Math.random() * 4294967296);
+  const rng = makeRng(S.seed);
+  S.questions = buildQuestions(rng); QUESTIONS = S.questions; S.params = genParams(rng);
+  S.code = { A: starterCode('A'), B: starterCode('B'), C: starterCode('C') };
+  startTimer('quiz'); go('quiz');
+}
+
+/* =========================================================
+   SCREEN 2 — QUIZ
+   ========================================================= */
+function renderQuiz() {
+  const q = QUESTIONS[S.qi], a = S.answers[S.qi], n = QUESTIONS.length;
+  const answered = S.answers.filter(Boolean).length, right = S.answers.filter(x => x && x.ok).length;
+  const pct = ((S.qi + (a ? 1 : 0)) / n) * 100;
+  let body;
+  if (q.type === 'mc') {
+    body = `<div class="grid gap-2.5 mt-5">` + q.options.map((o, i) => {
+      let cls = 'opt';
+      if (a) cls += i === q.answer ? ' correct' : (i === a.given ? ' wrong' : ' dim');
+      return `<button ${a ? 'disabled' : ''} onclick="answerMC(${i})" class="${cls}"><span class="opt-key">${'ABCD'[i]}</span><span class="font-mono text-sm">${esc(o)}</span></button>`;
+    }).join('') + `</div>`;
+  } else {
+    body = `<div class="mt-5 flex flex-col sm:flex-row gap-3">
+      <input id="saInput" ${a ? 'disabled' : ''} value="${a ? esc(a.given) : ''}" onkeydown="if(event.key==='Enter')answerSA()" placeholder="Type your answer" inputmode="numeric" autocomplete="off"
+        class="flex-1 rounded-lg bg-slate-900/80 border ${a ? (a.ok ? 'border-emerald-500' : 'border-rose-500') : 'border-white/15'} px-3 py-2.5 font-mono outline-none focus:border-indigo-400">
+      ${a ? '' : `<button class="btn btn-primary" onclick="answerSA()">Check answer</button>`}
+    </div>`;
+  }
+  const fb = a ? `<div class="mt-5 rounded-xl border ${a.ok ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-rose-500/40 bg-rose-500/10'} p-4 fade-in">
+      <div class="font-semibold ${a.ok ? 'text-emerald-300' : 'text-rose-300'}">${a.ok ? '✓ Correct!' : '✗ Not quite' + (q.type === 'sa' ? ' — the answer is ' + esc(q.answerText) : ' — the answer is ' + 'ABCD'[q.answer] + ') ' + esc(q.options[q.answer]))}</div>
+      <p class="text-sm text-slate-300 mt-1">${esc(q.explain)}</p></div>
+    <div class="mt-5 flex justify-end"><button class="btn btn-primary" onclick="nextQ()">${S.qi < n - 1 ? 'Next question →' : 'Continue to coding circuit →'}</button></div>` : '';
+  $('#screen').innerHTML = `
+  <section class="fade-in max-w-3xl mx-auto">
+    <div class="flex items-center justify-between text-sm mb-2">
+      <span class="text-slate-300">Phase 1 · Question <b class="text-white">${S.qi + 1}</b> of ${n}</span>
+      <span class="flex items-center gap-3">${timerHTML()}<span class="text-slate-300">Score <b class="text-emerald-300">${right}</b>/${answered}</span></span>
+    </div>
+    <div class="bar mb-6"><i class="bg-gradient-to-r from-indigo-500 to-cyan-400" style="width:${pct}%"></i></div>
+    <div class="card p-5 sm:p-6">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <span class="text-xs px-2.5 py-1 rounded-full border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">${esc(q.section)}</span>
+        <span class="text-xs text-slate-400">${LANGS[S.lang].icon} ${LANGS[S.lang].label}${q.type === 'sa' ? ' · short answer' : ''}</span>
+      </div>
+      <h2 class="mt-4 text-lg font-semibold text-white">${esc(q.text)}</h2>
+      <pre class="code mt-3">${highlight(q.code[S.lang], S.lang)}</pre>
+      ${body}${fb}
+    </div>
+  </section>`;
+  if (q.type === 'sa' && !a) { const i = $('#saInput'); if (i) i.focus(); }
+  saveState();
+}
+function answerMC(i) {
+  if (S.answers[S.qi]) return;
+  S.answers[S.qi] = { given: i, ok: i === QUESTIONS[S.qi].answer };
+  renderQuiz();
+}
+function answerSA() {
+  if (S.answers[S.qi]) return;
+  const v = ($('#saInput').value || '').trim();
+  if (!v) return toast('Type an answer first');
+  const q = QUESTIONS[S.qi];
+  S.answers[S.qi] = { given: v, ok: q.accept.includes(v.replace(/\s+/g, '')) };
+  renderQuiz();
+}
+function nextQ() { if (S.qi < QUESTIONS.length - 1) { S.qi++; renderQuiz(); window.scrollTo(0, 0); } else finishQuiz(false); }
+
+/* =========================================================
+   SCREEN 3 — CODING CIRCUIT (one task per timed stage)
+   ========================================================= */
+function isUntouched(t) { const c = (S.code[t] || '').trim(); return !c || c === starterCode(t).trim(); }
+function tabsHTML() {
+  return ['A','B','C'].map(k => `<span class="tab ${k === S.task ? 'active' : ''}" style="cursor:default">${S.stageRes[k] ? '✓ ' : ''}Task ${k}</span>`).join('');
+}
+function runOutHTML(t) {
+  const r = S.runs[t]; if (!r) return `<p class="text-sm text-slate-500">Press <b>${S.lang === 'javascript' ? 'Run tests' : 'Check my code'}</b> to get feedback. You can run it as often as you like before the timer ends.</p>`;
+  if (r.note) return `<p class="text-sm text-amber-300">${esc(r.note)}</p>`;
+  const head = `<div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-white">${r.kind === 'tests' ? 'Automated tests' : 'Criteria check'}</span><span class="text-sm ${r.score >= r.max ? 'text-emerald-300' : 'text-amber-300'}">${r1(r.score)} / ${r.max} pts</span></div>`;
+  const err = r.error ? `<div class="mb-2 text-sm text-rose-300 font-mono">${esc(r.error)}</div>` : '';
+  const items = r.items.map(i => `<li class="flex gap-2 text-sm"><span class="${i.pass ? 'text-emerald-400' : 'text-rose-400'}">${i.pass ? '✓' : '✗'}</span><span><span class="${i.pass ? 'text-slate-200' : 'text-slate-300'}">${esc(i.label)}</span>${i.pts ? ` <span class="text-slate-500">(${i.pts} pts)</span>` : ''}${!i.pass && i.detail ? `<span class="block text-xs text-slate-400 font-mono">${esc(i.detail)}</span>` : ''}</span></li>`).join('');
+  const foot = r.kind === 'criteria' ? `<p class="mt-3 text-xs text-slate-500">Checks look for the key logic in your code (loops, operators, diagonals, return). Your instructor can review the full solution.</p>` : '';
+  return head + err + `<ul class="space-y-1.5">${items}</ul>` + foot;
+}
+function renderCoding() {
+  const t = S.task, T = TASKS[t], f = T.fn[S.lang], n = ['A','B','C'].indexOf(t) + 1;
+  const lvl = { Baseline:'text-emerald-300 border-emerald-500/40 bg-emerald-500/10', Intermediate:'text-sky-300 border-sky-500/40 bg-sky-500/10', Advanced:'text-violet-300 border-violet-500/40 bg-violet-500/10' }[T.level];
+  $('#screen').innerHTML = `
+  <section class="fade-in">
+    <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+      <div><div class="text-sm text-slate-400">Phase 2 · Practical coding circuit · Task ${n} of 3</div><h2 class="text-2xl font-bold text-white">${T.title}</h2></div>
+      <div class="flex items-center gap-3 flex-wrap">${timerHTML()}<div id="tabs" class="flex gap-2">${tabsHTML()}</div></div>
+    </div>
+    <div class="grid lg:grid-cols-5 gap-5">
+      <div class="lg:col-span-2 card p-5 h-fit">
+        <div class="flex items-center gap-2 mb-3 flex-wrap"><span class="text-xs px-2.5 py-1 rounded-full border ${lvl}">${T.level}</span><span class="text-xs text-slate-400">${T.max} points · ${LANGS[S.lang].icon} ${LANGS[S.lang].label} · ${LIMITS[t] / 60} min</span></div>
+        <div class="text-sm text-slate-300 leading-relaxed">${T.desc(f, S.params[t])}</div>
+        <div class="mt-4 text-xs text-slate-400 border-t border-white/10 pt-3 space-y-1"><div>${S.lang === 'javascript'
+          ? 'Your code is executed against test cases in a safe sandbox. Keep the function name.'
+          : 'Your code is checked for the required logic and structure. Keep the function name from the starter.'}</div>
+          <div>When the timer hits 00:00 your latest code is submitted automatically.</div></div>
+      </div>
+      <div class="lg:col-span-3">
+        <textarea id="editor" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" oninput="S.code[S.task]=this.value;saveSoon()" onkeydown="editorKey(event)">${esc(S.code[t])}</textarea>
+        <div class="flex flex-wrap items-center gap-2 mt-3">
+          <button id="runBtn" class="btn btn-ghost" onclick="runChecks()">▶ ${S.lang === 'javascript' ? 'Run tests' : 'Check my code'}</button>
+          <button class="btn btn-ghost" onclick="resetTask()">Reset starter</button>
+          <div class="ml-auto"><button class="btn btn-primary" onclick="submitTask()">Submit Task ${t} ✓</button></div>
+        </div>
+        <div id="runOut" class="card p-4 mt-4">${runOutHTML(t)}</div>
+      </div>
+    </div>
+  </section>`;
+}
+function editorKey(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault(); const ta = e.target, s = ta.selectionStart, en = ta.selectionEnd;
+    ta.value = ta.value.slice(0, s) + '    ' + ta.value.slice(en); ta.selectionStart = ta.selectionEnd = s + 4; S.code[S.task] = ta.value; saveSoon();
+  }
+}
+function resetTask() { if (confirm('Reset this task to the starter code? Your changes will be lost.')) { S.code[S.task] = starterCode(S.task); delete S.runs[S.task]; renderCoding(); saveState(); } }
+async function gradeTask(t) {
+  const T = TASKS[t], code = S.code[t], lang = S.lang;
+  if (isUntouched(t)) return { kind: lang === 'javascript' ? 'tests' : 'criteria', score: 0, max: T.max, items: [], note: 'No solution was written — the starter code was left unchanged.' };
+  if (lang === 'javascript') {
+    const r = await runInWorker(t, code, S.params[t]);
+    const items = r.tests || [], passed = items.filter(x => x.pass).length;
+    return { kind: 'tests', score: items.length ? r1(passed / items.length * T.max) : 0, max: T.max, items, error: r.error };
+  }
+  const c = stripComments(code, lang);
+  const items = getChecks(t, lang, S.params[t]).map(ch => ({ label: ch.label, pts: ch.pts, pass: !!ch.test(c) }));
+  return { kind: 'criteria', score: items.reduce((s, i) => s + (i.pass ? i.pts : 0), 0), max: T.max, items };
+}
+async function runChecks() {
+  const t = S.task, btn = $('#runBtn'); S.code[t] = $('#editor').value;
+  btn.disabled = true; btn.textContent = 'Running…';
+  const r = await gradeTask(t);
+  if (S.phase !== 'coding' || S.task !== t) return;
+  S.runs[t] = r; saveState();
+  btn.disabled = false; btn.textContent = (S.lang === 'javascript' ? '▶ Run tests' : '▶ Check my code');
+  $('#runOut').innerHTML = runOutHTML(t);
+}
+
+/* =========================================================
+   STAGE FLOW + STAGE RESULT SCREEN
+   ========================================================= */
+function finishQuiz(forced) {
+  if (S.finishing || S.phase !== 'quiz') return;
+  stopTimer(); S.stageRes.quiz = { forced }; S.cur = 'quiz'; go('stageResult');
+}
+function submitTask() {
+  if (!confirm('Submit Task ' + S.task + ' now? You will not be able to come back to it.')) return;
+  finishTask(S.task, false);
+}
+async function finishTask(t, forced) {
+  if (S.finishing || S.phase !== 'coding') return;
+  S.finishing = true; stopTimer();
+  const ed = $('#editor'); if (ed) S.code[t] = ed.value;
+  $('#overlay').classList.remove('hidden'); $('#overlay').classList.add('grid');
+  let g;
+  try { g = await gradeTask(t); } catch (e) { g = { kind: 'criteria', score: 0, max: TASKS[t].max, items: [], error: 'Grading error: ' + e.message }; }
+  g.forced = forced; S.stageRes[t] = g;
+  $('#overlay').classList.add('hidden'); $('#overlay').classList.remove('grid');
+  S.finishing = false; S.cur = t; go('stageResult');
+}
+function continueFlow() {
+  const next = STAGE_ORDER[STAGE_ORDER.indexOf(S.cur) + 1];
+  if (next) { S.task = next; startTimer(next); go('coding'); }
+  else finalizeAll();
+}
+function finalizeAll() {
+  S.result = computeResult({ A: S.stageRes.A, B: S.stageRes.B, C: S.stageRes.C });
+  persistResult(S.result); go('results');
+}
+function renderStageResult() {
+  const st = S.cur, idx = STAGE_ORDER.indexOf(st), next = STAGE_ORDER[idx + 1], r = S.stageRes[st];
+  let score, max, title, body;
+  if (st === 'quiz') {
+    const n = QUESTIONS.length, correct = S.answers.filter(a => a && a.ok).length;
+    score = r1(correct / n * QUIZ_MAX); max = QUIZ_MAX; title = 'Phase 1 · Concept quiz';
+    const failed = QUESTIONS.map((q, i) => ({ q, a: S.answers[i], i })).filter(x => !(x.a && x.a.ok));
+    const secs = SECTIONS.map(name => { const qs = QUESTIONS.map((q, i) => ({ q, a: S.answers[i] })).filter(x => x.q.section === name); const ok = qs.filter(x => x.a && x.a.ok).length; return { name, ok, total: qs.length, pct: Math.round(ok / qs.length * 100) }; });
+    body = `
+      <div class="text-sm text-slate-300 mb-4">${correct} of ${n} questions correct.</div>
+      <div class="space-y-3 mb-6">${secs.map(s => `<div><div class="flex justify-between text-xs mb-1"><span class="text-slate-300">${esc(s.name)}</span><span class="text-slate-400">${s.ok}/${s.total}</span></div><div class="bar"><i class="${barColor(s.pct)}" style="width:${s.pct}%"></i></div></div>`).join('')}</div>
+      <h4 class="font-semibold text-white mb-2">${failed.length ? 'Questions you missed (' + failed.length + ')' : 'No missed questions'}</h4>
+      ${failed.length ? `<div class="space-y-3">${failed.map(({ q, a, i }) => `
+        <div class="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4">
+          <div class="flex items-center justify-between gap-2 flex-wrap"><span class="text-sm font-semibold text-white">Q${i + 1} · ${esc(q.section)}</span><span class="text-xs text-rose-300">${a ? 'You answered: ' + (q.type === 'mc' ? 'ABCD'[a.given] + ') ' + esc(q.options[a.given]) : esc(a.given)) : 'Not answered'}</span></div>
+          <p class="text-sm text-slate-300 mt-2">${esc(q.text)}</p><pre class="code mt-2">${highlight(q.code[S.lang], S.lang)}</pre>
+          <p class="text-sm mt-2"><b class="text-emerald-300">Correct answer:</b> ${q.type === 'mc' ? 'ABCD'[q.answer] + ') ' + esc(q.options[q.answer]) : esc(q.answerText)}</p>
+          <p class="text-sm text-slate-400 mt-1">${esc(q.explain)}</p></div>`).join('')}</div>` : '<p class="text-sm text-emerald-300">Perfect score on the quiz! 🎉</p>'}`;
+  } else {
+    score = r1(r.score); max = r.max; title = TASKS[st].title;
+    const failed = r.items.filter(i => !i.pass), passed = r.items.filter(i => i.pass);
+    body = `
+      ${r.note ? `<p class="text-sm text-amber-300 mb-3">${esc(r.note)}</p>` : ''}${r.error ? `<div class="mb-3 text-sm text-rose-300 font-mono">${esc(r.error)}</div>` : ''}
+      <h4 class="font-semibold text-white mb-2">${failed.length ? (r.kind === 'tests' ? 'Tests you failed (' : 'Requirements you missed (') + failed.length + ')' : 'All ' + (r.kind === 'tests' ? 'tests' : 'requirements') + ' passed'}</h4>
+      ${failed.length ? `<div class="space-y-2 mb-5">${failed.map(i => `<div class="rounded-lg border border-rose-500/30 bg-rose-500/5 p-3 text-sm"><div class="text-slate-200">✗ ${esc(i.label)}${i.pts ? ` <span class="text-slate-500">(${i.pts} pts)</span>` : ''}</div>${i.detail ? `<div class="text-xs text-slate-400 font-mono mt-1">${esc(i.detail)}</div>` : ''}</div>`).join('')}</div>` : (r.items.length ? '<p class="text-sm text-emerald-300 mb-5">Great work — everything passed. 🎉</p>' : '')}
+      ${passed.length ? `<details class="rounded-lg border border-white/10 bg-white/[.03]"><summary class="px-4 py-2.5 text-sm text-slate-300">Passed (${passed.length})</summary><ul class="px-4 pb-3 space-y-1">${passed.map(i => `<li class="text-sm text-slate-300"><span class="text-emerald-400">✓</span> ${esc(i.label)}</li>`).join('')}</ul></details>` : ''}`;
+  }
+  const pct = Math.round(score / max * 100), nextLabel = next ? `Continue to Task ${next} · ${TASKS[next].title.split(' · ')[1]} (${LIMITS[next] / 60} min) →` : 'See my final results →';
+  $('#screen').innerHTML = `
+  <section class="fade-in max-w-3xl mx-auto space-y-5">
+    <div class="card p-6">
+      <div class="text-xs text-slate-400">Stage ${idx + 1} of ${STAGE_ORDER.length} complete</div>
+      <h2 class="text-2xl font-bold text-white mt-1">${esc(title)}</h2>
+      ${r.forced ? `<div class="mt-3 text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 text-amber-200 px-3 py-2">⏱ Time ran out — your ${st === 'quiz' ? 'answers were' : 'latest code was'} submitted automatically.</div>` : ''}
+      <div class="mt-4 flex items-end gap-3"><div class="text-5xl font-extrabold text-white">${score}</div><div class="text-slate-400 pb-1.5">/ ${max} points · ${pct}%</div></div>
+      <div class="bar mt-3"><i class="${barColor(pct)}" style="width:${pct}%"></i></div>
+    </div>
+    <div class="card p-6">${body}</div>
+    <div class="card p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400">${next ? 'Take a breath — the next timer starts only when you press the button.' : 'All stages done. Your final dashboard is ready.'}</p>
+      <button class="btn btn-primary" onclick="continueFlow()">${nextLabel}</button>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   SUBMISSION + SCORING
+   ========================================================= */
+function computeResult(coding) {
+  const n = QUESTIONS.length;
+  const correct = S.answers.filter(a => a && a.ok).length;
+  const quizPts = r1(correct / n * QUIZ_MAX);
+  const secs = SECTIONS.map(name => {
+    const qs = QUESTIONS.map((q, i) => ({ q, a: S.answers[i] })).filter(x => x.q.section === name);
+    const ok = qs.filter(x => x.a && x.a.ok).length;
+    return { name, got: ok, total: qs.length, pct: Math.round(ok / qs.length * 100), detail: ok + ' / ' + qs.length + ' correct' };
+  });
+  ['A','B','C'].forEach(k => secs.push({ name: 'Task ' + k, got: coding[k].score, total: TASKS[k].max, pct: Math.round(coding[k].score / TASKS[k].max * 100), detail: r1(coding[k].score) + ' / ' + TASKS[k].max + ' pts' }));
+  const codePts = ['A','B','C'].reduce((s, k) => s + coding[k].score, 0);
+  const total = r1(quizPts + codePts);
+  const tier = total > 85 ? 3 : total >= 50 ? 2 : 1;
+  return { v: 1, name: S.name, lang: S.lang, quiz: quizPts, quizCorrect: correct, A: r1(coding.A.score), B: r1(coding.B.score), C: r1(coding.C.score), total, tier,
+           secs: secs.map(s => ({ name: s.name, pct: s.pct, detail: s.detail })), minutes: Math.max(1, Math.round((Date.now() - S.startedAt) / 60000)), blurs: S.blurs || 0, date: new Date().toISOString(),
+           _coding: coding };
+}
+function publicPayload(R) { const { _coding, ...p } = R; return p; }
+function resultCode(R) { return btoa(unescape(encodeURIComponent(JSON.stringify(publicPayload(R))))); }
+function decodeResult(code) { return JSON.parse(decodeURIComponent(escape(atob(code.trim())))); }
+function persistResult(R) {
+  try { const all = JSON.parse(localStorage.getItem('cc_results') || '[]'); all.push(publicPayload(R)); localStorage.setItem('cc_results', JSON.stringify(all)); } catch (e) {}
+}
+
+/* =========================================================
+   SCREEN 4 — RESULTS DASHBOARD
+   ========================================================= */
+function barColor(p) { return p < 50 ? 'bg-rose-500' : p <= 85 ? 'bg-sky-500' : 'bg-emerald-500'; }
+function renderResults() {
+  const R = S.result, T = TIERS[R.tier], circ = 2 * Math.PI * 54, off = circ * (1 - R.total / 100);
+  const strengths = R.secs.filter(s => s.pct >= 75).map(s => s.name);
+  const focus = R.secs.filter(s => s.pct < 60).sort((a, b) => a.pct - b.pct).slice(0, 4);
+  const q = QUESTIONS.map((qq, i) => ({ qq, a: S.answers[i] }));
+  $('#screen').innerHTML = `
+  <section class="fade-in space-y-6">
+    <div class="card p-6 bg-gradient-to-br ${T.glow} to-transparent">
+      <div class="flex flex-col md:flex-row gap-6 items-center">
+        <div class="relative w-40 h-40 flex-none">
+          <svg viewBox="0 0 120 120" class="w-40 h-40 -rotate-90"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/>
+            <circle id="ring" cx="60" cy="60" r="54" fill="none" stroke="${T.ring}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${circ}" style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)"/></svg>
+          <div class="absolute inset-0 grid place-items-center text-center"><div><div class="text-4xl font-extrabold text-white">${R.total}</div><div class="text-xs text-slate-400">out of 100</div></div></div>
+        </div>
+        <div class="flex-1 text-center md:text-left">
+          <div class="text-sm text-slate-400">${esc(R.name)} · ${LANGS[R.lang].icon} ${LANGS[R.lang].label} · ${R.minutes} min</div>
+          <span class="inline-block mt-2 px-3 py-1 rounded-full border text-sm font-bold ${T.badge}">${T.name}</span>
+          <h2 class="mt-2 text-2xl font-bold text-white">${T.tagline}</h2>
+          <p class="text-slate-300 text-sm mt-1">Score band: ${T.range} · Recommended: <b class="text-white">${T.focus}</b></p>
+          <div class="mt-3 grid grid-cols-3 gap-2 max-w-md mx-auto md:mx-0 text-center text-xs">
+            <div class="rounded-lg bg-white/5 p-2"><div class="text-lg font-bold text-white">${R.quiz}<span class="text-slate-500 text-xs">/40</span></div>Quiz</div>
+            <div class="rounded-lg bg-white/5 p-2"><div class="text-lg font-bold text-white">${r1(R.A + R.B + R.C)}<span class="text-slate-500 text-xs">/60</span></div>Coding</div>
+            <div class="rounded-lg bg-white/5 p-2"><div class="text-lg font-bold text-white">${R.quizCorrect}<span class="text-slate-500 text-xs">/12</span></div>Correct</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="card p-5">
+        <h3 class="font-bold text-white mb-4">Section breakdown</h3>
+        <div class="space-y-4">${R.secs.map((s, i) => `
+          <div><div class="flex justify-between text-sm mb-1"><span class="text-slate-200">${esc(s.name)}</span><span class="text-slate-400">${esc(s.detail)} · <b class="text-white">${s.pct}%</b></span></div>
+          <div class="bar"><i class="${barColor(s.pct)}" data-w="${s.pct}" style="width:0"></i></div></div>${i === 3 ? '<div class="border-t border-white/10"></div>' : ''}`).join('')}
+        </div>
+        <p class="text-xs text-slate-500 mt-4">Weighting: Quiz 40 · Task A 15 · Task B 20 · Task C 25 = 100 points.</p>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-bold text-white mb-3">Your recommended track</h3>
+        <ul class="space-y-2 text-sm text-slate-300">${T.recs.map(r => `<li class="flex gap-2"><span class="text-cyan-300">▸</span><span>${r}</span></li>`).join('')}</ul>
+        <div class="mt-5 grid sm:grid-cols-2 gap-4">
+          <div><div class="text-xs uppercase tracking-wide text-emerald-300 mb-1.5">Strengths</div>${strengths.length ? strengths.map(s => `<span class="inline-block text-xs px-2 py-1 mr-1 mb-1 rounded-full bg-emerald-500/15 text-emerald-200 border border-emerald-500/30">${esc(s)}</span>`).join('') : '<span class="text-xs text-slate-500">Keep building — none above 75% yet.</span>'}</div>
+          <div><div class="text-xs uppercase tracking-wide text-rose-300 mb-1.5">Focus areas</div>${focus.length ? focus.map(s => `<span class="inline-block text-xs px-2 py-1 mr-1 mb-1 rounded-full bg-rose-500/15 text-rose-200 border border-rose-500/30">${esc(s.name)}</span>`).join('') : '<span class="text-xs text-slate-500">No section below 60%. 🎉</span>'}</div>
+        </div>
+        ${focus.length ? `<div class="mt-4 pt-4 border-t border-white/10 space-y-2 text-xs text-slate-400">${focus.map(s => `<p><b class="text-slate-200">${esc(s.name)}:</b> ${REMEDY[s.name]}</p>`).join('')}</div>` : ''}
+      </div>
+    </div>
+
+    <div class="card p-5 no-print">
+      <h3 class="font-bold text-white">Send to your instructor</h3>
+      <p class="text-xs text-slate-400 mt-1">Download your answers file and send it to your instructor — it holds every question you saw, your responses, scores and a full analysis. The short result code is a summary version. They can paste all codes into the Instructor view to see the whole cohort.</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <button class="btn btn-primary" onclick="downloadTxt()">⬇ Download my answers (.txt)</button>
+        <button class="btn btn-ghost" onclick="copyText(resultCode(S.result),'Result code copied')">Copy result code</button>
+        <button class="btn btn-ghost" onclick="downloadReport()">Download report (JSON)</button>
+        <button class="btn btn-ghost" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn btn-ghost" onclick="showInstructor()">Instructor view</button>
+        <button class="btn btn-ghost" onclick="restart()">New student</button>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <h3 class="font-bold text-white mb-3">Quiz review</h3>
+      <div class="space-y-2">${q.map(({ qq, a }, i) => `
+        <details class="rounded-lg border border-white/10 bg-white/[.03]"><summary class="flex items-center gap-3 px-4 py-3 text-sm">
+          <span class="${a && a.ok ? 'text-emerald-400' : 'text-rose-400'} font-bold">${a && a.ok ? '✓' : '✗'}</span>
+          <span class="text-slate-200">Q${i + 1} · ${esc(qq.section)}</span><span class="ml-auto text-xs text-slate-500">${a ? (qq.type === 'mc' ? 'You: ' + 'ABCD'[a.given] : 'You: ' + esc(a.given)) : 'Unanswered'}</span></summary>
+          <div class="px-4 pb-4"><p class="text-sm text-slate-300 mb-2">${esc(qq.text)}</p><pre class="code">${highlight(qq.code[R.lang], R.lang)}</pre>
+          <p class="text-sm mt-2"><b class="text-emerald-300">Answer:</b> ${qq.type === 'mc' ? 'ABCD'[qq.answer] + ') ' + esc(qq.options[qq.answer]) : esc(qq.answerText)}</p>
+          <p class="text-sm text-slate-400 mt-1">${esc(qq.explain)}</p></div></details>`).join('')}
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <h3 class="font-bold text-white mb-3">Coding submissions</h3>
+      <div class="space-y-3">${['A','B','C'].map(k => { const c = R._coding[k]; return `
+        <details class="rounded-lg border border-white/10 bg-white/[.03]"><summary class="flex items-center gap-3 px-4 py-3 text-sm">
+          <span class="text-slate-200">${TASKS[k].title}</span><span class="ml-auto text-xs ${c.score >= c.max ? 'text-emerald-300' : 'text-amber-300'}">${r1(c.score)} / ${c.max} pts</span></summary>
+          <div class="px-4 pb-4"><pre class="code">${highlight(S.code[k], R.lang)}</pre><div class="mt-3">${runOutHTML2(c)}</div></div></details>`; }).join('')}
+      </div>
+    </div>
+  </section>`;
+  requestAnimationFrame(() => setTimeout(() => {
+    const ring = $('#ring'); if (ring) ring.style.strokeDashoffset = off;
+    document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w + '%');
+  }, 80));
+}
+function runOutHTML2(c) {
+  if (c.note) return `<p class="text-sm text-amber-300">${esc(c.note)}</p>`;
+  const err = c.error ? `<div class="mb-2 text-sm text-rose-300 font-mono">${esc(c.error)}</div>` : '';
+  return err + `<ul class="space-y-1">${c.items.map(i => `<li class="text-sm flex gap-2"><span class="${i.pass ? 'text-emerald-400' : 'text-rose-400'}">${i.pass ? '✓' : '✗'}</span><span class="text-slate-300">${esc(i.label)}${i.pts ? ' <span class="text-slate-500">(' + i.pts + ' pts)</span>' : ''}</span></li>`).join('')}</ul>`;
+}
+function downloadReport() {
+  const R = S.result, payload = { ...publicPayload(R), code: S.code, quizAnswers: QUESTIONS.map((q, i) => ({ q: i + 1, section: q.section, given: S.answers[i] ? (q.type === 'mc' ? 'ABCD'[S.answers[i].given] : S.answers[i].given) : null, correct: !!(S.answers[i] && S.answers[i].ok) })) };
+  download('assessment-' + R.name.replace(/\W+/g, '_') + '.json', JSON.stringify(payload, null, 2), 'application/json');
+}
+function download(name, text, type) {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+/* =========================================================
+   TXT EXPORT — full record: questions, responses, scores, analysis
+   ========================================================= */
+function plain(html) {
+  return html.replace(/<li>/g, '\n- ').replace(/<\/p>|<\/div>|<\/li>|<br\s*\/?>/g, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').split('\n').map(l => l.trim()).filter(Boolean).join('\n');
+}
+function indent(code, n) { const pad = ' '.repeat(n); return String(code).replace(/\s+$/, '').split('\n').map(l => pad + l).join('\n'); }
+function buildReport() {
+  const R = S.result, P = S.params, Tr = TIERS[R.tier], lang = LANGS[R.lang].label, L = [];
+  const add = (x = '') => L.push(x), HR = '='.repeat(78), TH = '-'.repeat(78);
+  const head = t => { add(); add(HR); add(t); add(HR); };
+  const when = new Date(R.date);
+  add(HR); add('CODECIRCUIT ASSESSMENT RECORD'); add(HR);
+  add('Student name      : ' + R.name);
+  add('Language          : ' + lang);
+  add('Submitted         : ' + when.toLocaleString() + '  (' + R.date + ')');
+  add('Time taken        : ' + R.minutes + ' minute(s)');
+  add('Tab switches      : ' + (R.blurs || 0) + '  (times the student left the assessment tab)');
+  add('Variant ID        : ' + S.seed + '  (questions, numbers, option order and coding parameters are randomised per student)');
+  add('Format note       : plain text. Parts are separated by lines of "=". Every question includes the student\'s response, the answer key and the explanation, so this file can be marked or analysed directly.');
+  head('1. SCORE SUMMARY');
+  add('TOTAL SCORE       : ' + R.total + ' / 100');
+  add('PLACEMENT         : ' + Tr.name + '  (score band: ' + Tr.range + ' — ' + Tr.tagline + ')');
+  add('Quiz              : ' + R.quiz + ' / ' + QUIZ_MAX + '   (' + R.quizCorrect + ' of ' + QUESTIONS.length + ' questions correct)');
+  ['A', 'B', 'C'].forEach(k => add(('Task ' + k).padEnd(18) + ': ' + R[k] + ' / ' + TASKS[k].max + '   (' + TASKS[k].title.split(' · ')[1] + ')'));
+  add('Weighting         : Quiz 40 + Task A 15 + Task B 20 + Task C 25 = 100 points. Tier 1 < 50, Tier 2 = 50–85, Tier 3 > 85.');
+  add(); add('Section breakdown:');
+  R.secs.forEach(s => add('  ' + s.name.padEnd(24) + String(s.pct).padStart(3) + '%   (' + s.detail + ')'));
+  head('2. ANALYSIS');
+  const strengths = R.secs.filter(s => s.pct >= 75), focus = R.secs.filter(s => s.pct < 60).sort((a, b) => a.pct - b.pct);
+  add('Strengths  (>= 75%): ' + (strengths.length ? strengths.map(s => s.name + ' ' + s.pct + '%').join('; ') : 'none yet'));
+  add('Focus areas (< 60%): ' + (focus.length ? focus.map(s => s.name + ' ' + s.pct + '%').join('; ') : 'none'));
+  const missed = QUESTIONS.map((q, i) => ({ q, a: S.answers[i], i })).filter(x => !(x.a && x.a.ok));
+  add('Quiz questions missed: ' + (missed.length ? missed.map(x => 'Q' + (x.i + 1) + ' [' + x.q.section + ']' + (x.a ? '' : ' (unanswered)')).join(', ') : 'none'));
+  const forced = [];
+  if (S.stageRes.quiz && S.stageRes.quiz.forced) forced.push('Quiz');
+  ['A', 'B', 'C'].forEach(k => { if (R._coding && R._coding[k] && R._coding[k].forced) forced.push('Task ' + k); });
+  add('Stages auto-submitted by the timer: ' + (forced.length ? forced.join(', ') : 'none (all submitted by the student)'));
+  add(); add('Recommended track: ' + Tr.focus);
+  Tr.recs.forEach(r => add('  * ' + r));
+  if (focus.length) { add(); add('Targeted remediation:'); focus.forEach(s => add('  * ' + s.name + ': ' + REMEDY[s.name])); }
+  head('3. PART 1 — CONCEPT QUIZ (' + QUESTIONS.length + ' questions, in the order this student saw them)');
+  QUESTIONS.forEach((q, i) => {
+    const a = S.answers[i], ok = !!(a && a.ok);
+    add('Q' + (i + 1) + '  [' + q.section + ']  ' + (q.type === 'sa' ? '(short answer)' : '(multiple choice)') + '   Template #' + q.id);
+    add('Question: ' + q.text);
+    add('Code (' + lang + '):'); add(indent(q.code[R.lang], 4));
+    if (q.type === 'mc') { add('Options:'); q.options.forEach((o, j) => add('    ' + 'ABCD'[j] + ') ' + o)); }
+    add('Student response : ' + (a ? (q.type === 'mc' ? 'ABCD'[a.given] + ') ' + q.options[a.given] : a.given) : '(not answered)'));
+    add('Correct answer   : ' + (q.type === 'mc' ? 'ABCD'[q.answer] + ') ' + q.options[q.answer] : q.answerText));
+    add('Result           : ' + (ok ? 'CORRECT  (+' + r1(QUIZ_MAX / QUESTIONS.length) + ' pts)' : 'INCORRECT (0 pts)'));
+    add('Explanation      : ' + q.explain);
+    add(TH);
+  });
+  head('4. PART 2 — CODING TASKS');
+  ['A', 'B', 'C'].forEach(k => {
+    const T = TASKS[k], c = R._coding[k], f = T.fn[R.lang];
+    add(T.title + '   [' + T.level + ', ' + T.max + ' points, ' + (LIMITS[k] / 60) + ' min limit]');
+    add('Variant parameters: ' + (k === 'A' ? 'range 1–' + P.A.n + ', Fizz = multiples of ' + P.A.d1 + ', Buzz = multiples of ' + P.A.d2 : k === 'B' ? 'keep even numbers, multiply by ' + P.B.k : 'worked example matrix ' + JSON.stringify(P.C.demo) + ' → ' + P.C.demoWant));
+    add('Task statement (' + lang + ', function ' + f + '):'); add(indent(plain(T.desc(f, P[k])), 4));
+    add(); add('Student submission' + (c.forced ? ' (AUTO-SUBMITTED when the timer ended)' : '') + ':');
+    add(indent(S.code[k], 4));
+    add(); add('Grading method: ' + (c.kind === 'tests' ? 'automated tests — the code was actually executed' : 'pattern/structure checks only — the code was NOT executed, so review it manually'));
+    if (c.note) add('Note: ' + c.note);
+    if (c.error) add('Error: ' + c.error);
+    c.items.forEach(i => add('  [' + (i.pass ? 'PASS' : 'FAIL') + '] ' + i.label + (i.pts ? ' (' + i.pts + ' pts)' : '') + (!i.pass && i.detail ? '\n         ' + i.detail : '')));
+    add('SCORE: ' + r1(c.score) + ' / ' + T.max);
+    add(TH);
+  });
+  head('5. NOTES FOR THE REVIEWER');
+  add('* Quiz marking is exact (answer key generated for this student\'s variant).');
+  add('* JavaScript solutions are executed against test cases. Java and Python solutions are checked by pattern only; a correct but unusual solution may lose points, and an incorrect one that contains the right keywords may gain some. Please read the submissions above before finalising marks.');
+  add('* Different students receive different numbers/values for the same question type, so compare students by question TEMPLATE number and section, not by raw answers.');
+  add(); add('End of record for ' + R.name + '.');
+  return L.join('\n') + '\n';
+}
+function downloadTxt() {
+  const name = (S.result.name || 'student').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, ' ').trim() || 'student';
+  download(name + '.txt', buildReport(), 'text/plain;charset=utf-8');
+  toast('Saved as ' + name + '.txt');
+}
+
+function restart() { if (confirm('Start a new assessment for another student?')) { clearState(); S.name = ''; S.lang = ''; S.result = null; S.stageRes = {}; S.answers = []; go('register'); } }
+
+/* =========================================================
+   INSTRUCTOR VIEW
+   ========================================================= */
+function showInstructor() { if (S.phase !== 'instructor') S.prevPhase = S.phase; if (S.prevPhase === 'quiz' || S.prevPhase === 'coding') { const ed = $('#editor'); if (ed) S.code[S.task] = ed.value; } S.phase = 'instructor'; renderStepper(); render(); window.scrollTo(0, 0); }
+function cohortRows() {
+  let local = []; try { local = JSON.parse(localStorage.getItem('cc_results') || '[]'); } catch (e) {}
+  const seen = new Set(), rows = [];
+  [...local, ...S.pasted].forEach(r => { const k = r.name + '|' + r.date; if (!seen.has(k)) { seen.add(k); rows.push(r); } });
+  return rows.sort((a, b) => b.total - a.total);
+}
+function renderInstructor() {
+  const rows = cohortRows(), cnt = { 1: 0, 2: 0, 3: 0 }; rows.forEach(r => cnt[r.tier]++);
+  const avg = rows.length ? r1(rows.reduce((s, r) => s + r.total, 0) / rows.length) : 0;
+  $('#screen').innerHTML = `
+  <section class="fade-in space-y-5">
+    <div class="flex items-center justify-between flex-wrap gap-3"><div><h2 class="text-2xl font-bold text-white">Instructor view</h2><p class="text-sm text-slate-400">Cohort results from this device plus any result codes you paste below.</p></div>
+      <button class="btn btn-ghost" onclick="go(S.prevPhase)">← Back</button></div>
+    <div class="grid sm:grid-cols-4 gap-3">
+      <div class="card p-4"><div class="text-3xl font-extrabold text-white">${rows.length}</div><div class="text-xs text-slate-400">students</div></div>
+      ${[1,2,3].map(t => `<div class="card p-4"><div class="text-3xl font-extrabold ${t === 1 ? 'text-rose-300' : t === 2 ? 'text-sky-300' : 'text-emerald-300'}">${cnt[t]}</div><div class="text-xs text-slate-400">${TIERS[t].name}</div></div>`).join('')}
+    </div>
+    <div class="card p-5"><h3 class="font-bold text-white">Paste result codes</h3>
+      <textarea id="pasteBox" rows="3" placeholder="One result code per line" class="mt-2 w-full rounded-lg bg-slate-900/80 border border-white/15 px-3 py-2 font-mono text-xs outline-none focus:border-indigo-400"></textarea>
+      <div class="mt-2 flex flex-wrap gap-2"><button class="btn btn-primary" onclick="importCodes()">Add to table</button>
+        <button class="btn btn-ghost" onclick="exportCSV()" ${rows.length ? '' : 'disabled'}>Export CSV</button>
+        <button class="btn btn-ghost" onclick="clearLocal()">Clear this device's results</button></div></div>
+    <div class="card p-0 overflow-x-auto"><table class="w-full text-sm">
+      <thead class="text-xs uppercase text-slate-400 border-b border-white/10"><tr><th class="text-left p-3">Student</th><th class="p-3">Lang</th><th class="p-3">Total</th><th class="p-3">Tier</th><th class="p-3">Quiz /40</th><th class="p-3">A /15</th><th class="p-3">B /20</th><th class="p-3">C /25</th><th class="p-3">Weakest section</th><th class="p-3">Tab switches</th></tr></thead>
+      <tbody>${rows.length ? rows.map(r => { const weak = [...r.secs].sort((a, b) => a.pct - b.pct)[0]; return `<tr class="border-b border-white/5 text-center">
+        <td class="p-3 text-left text-white font-medium">${esc(r.name)}</td><td class="p-3">${LANGS[r.lang] ? LANGS[r.lang].label : esc(r.lang)}</td><td class="p-3 font-bold text-white">${r.total}</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded-full border text-xs ${TIERS[r.tier].badge}">T${r.tier}</span></td><td class="p-3">${r.quiz}</td><td class="p-3">${r.A}</td><td class="p-3">${r.B}</td><td class="p-3">${r.C}</td>
+        <td class="p-3 text-xs text-slate-400">${esc(weak.name)} (${weak.pct}%)</td><td class="p-3 text-xs ${r.blurs > 2 ? 'text-rose-300' : 'text-slate-400'}">${r.blurs ?? '–'}</td></tr>`; }).join('') : `<tr><td colspan="10" class="p-6 text-center text-slate-500">No results yet.</td></tr>`}</tbody></table></div>
+  </section>`;
+}
+function importCodes() {
+  const lines = $('#pasteBox').value.split(/\s+/).filter(Boolean); let ok = 0;
+  lines.forEach(l => { try { const r = decodeResult(l); if (r && r.name && typeof r.total === 'number') { S.pasted.push(r); ok++; } } catch (e) {} });
+  toast(ok + ' of ' + lines.length + ' codes added'); renderInstructor();
+}
+function exportCSV() {
+  const rows = cohortRows(), head = ['Name','Language','Total','Tier','Quiz','TaskA','TaskB','TaskC','Minutes','TabSwitches','Date'];
+  const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+  download('cohort-results.csv', [head.join(','), ...rows.map(r => [r.name, r.lang, r.total, r.tier, r.quiz, r.A, r.B, r.C, r.minutes, r.blurs ?? '', r.date].map(q).join(','))].join('\n'), 'text/csv');
+}
+function clearLocal() { if (confirm("Delete all results stored on this device?")) { try { localStorage.removeItem('cc_results'); } catch (e) {} renderInstructor(); } }
+
+/* ---------- boot ---------- */
+if (restoreState()) {
+  document.body.classList.toggle('guard', guardOn()); renderStepper(); render();
+  if (S.phase === 'quiz' || S.phase === 'coding') {
+    if (S.deadline - Date.now() <= 0) onTimeUp();
+    else { TIMER = setInterval(tick, 250); toast('Welcome back — your progress and timer were restored'); }
+  }
+} else { renderStepper(); render(); }
+</script>
+</body>
+</html>

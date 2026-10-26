@@ -1,0 +1,355 @@
+==============================================================================
+CODECIRCUIT ASSESSMENT RECORD
+==============================================================================
+Student name      : Moses Anawo
+Language          : Python
+Submitted         : 10/23/2026, 2:10:23 PM  (2026-10-23T13:10:23.872Z)
+Time taken        : 109 minute(s)
+Tab switches      : 1  (times the student left the assessment tab)
+Variant ID        : 2480424883  (questions, numbers, option order and coding parameters are randomised per student)
+Format note       : plain text. Parts are separated by lines of "=". Every question includes the student's response, the answer key and the explanation, so this file can be marked or analysed directly.
+
+==============================================================================
+1. SCORE SUMMARY
+==============================================================================
+TOTAL SCORE       : 36.7 / 100
+PLACEMENT         : Tier 1 · Foundations  (score band: Below 50% — Needs support with the basics)
+Quiz              : 6.7 / 40   (2 of 12 questions correct)
+Task A            : 2 / 15   (FizzBuzz)
+Task B            : 3 / 20   (Filter & Multiply)
+Task C            : 25 / 25   (Diagonal Difference)
+Weighting         : Quiz 40 + Task A 15 + Task B 20 + Task C 25 = 100 points. Tier 1 < 50, Tier 2 = 50–85, Tier 3 > 85.
+
+Section breakdown:
+  Variables & Operators    25%   (1 / 4 correct)
+  Control Structures       33%   (1 / 3 correct)
+  Functions & Scope         0%   (0 / 2 correct)
+  Arrays & Matrices         0%   (0 / 3 correct)
+  Task A                   13%   (2 / 15 pts)
+  Task B                   15%   (3 / 20 pts)
+  Task C                  100%   (25 / 25 pts)
+
+==============================================================================
+2. ANALYSIS
+==============================================================================
+Strengths  (>= 75%): Task C 100%
+Focus areas (< 60%): Functions & Scope 0%; Arrays & Matrices 0%; Task A 13%; Task B 15%; Variables & Operators 25%; Control Structures 33%
+Quiz questions missed: Q3 [Control Structures], Q4 [Variables & Operators], Q5 [Arrays & Matrices], Q6 [Variables & Operators] (unanswered), Q7 [Arrays & Matrices] (unanswered), Q8 [Variables & Operators] (unanswered), Q9 [Functions & Scope] (unanswered), Q10 [Arrays & Matrices] (unanswered), Q11 [Functions & Scope] (unanswered), Q12 [Control Structures] (unanswered)
+Stages auto-submitted by the timer: Quiz, Task A, Task B, Task C
+
+Recommended track: Targeted remediation on syntax and loop mechanics
+  * Re-trace variable assignment, operators and precedence by hand — 15–20 short drills a day for two weeks.
+  * Loop mechanics clinic: write trace tables (i, total, output) for for/while loops, then practise break and continue.
+  * Re-do FizzBuzz daily from a blank file until the syntax in your language is automatic.
+  * Join a small-group instructor clinic and pair with a Tier 3 peer; re-assess in two weeks.
+
+Targeted remediation:
+  * Functions & Scope: Practise parameters vs arguments, return values, and local vs global variables; predict output before running.
+  * Arrays & Matrices: Draw arrays and grids with index labels; practise last-index (length - 1) and row/column traversal, including diagonals.
+  * Task A: Re-write FizzBuzz from scratch without notes: loop over the whole range, check the "both" case first, then each single divisor.
+  * Task B: Practise the filter → transform → collect pattern with small arrays, including empty and all-odd inputs.
+  * Variables & Operators: Hand-trace assignments and operator precedence; drill integer division (/, //, Math.floor) and the % operator on small numbers.
+  * Control Structures: Build trace tables (i, total, output) for if/else chains and for-loops; practise break vs continue on 5-line programs.
+
+==============================================================================
+3. PART 1 — CONCEPT QUIZ (12 questions, in the order this student saw them)
+==============================================================================
+Q1  [Variables & Operators]  (multiple choice)   Template #3
+Question: What is printed? (Integer division and remainder.)
+Code (Python):
+    x = 41
+    q = x // 7
+    r = x % 7
+    print(q * 10 + r)
+Options:
+    A) 46
+    B) 56
+    C) 65
+    D) 66
+Student response : B) 56
+Correct answer   : B) 56
+Result           : CORRECT  (+3.3 pts)
+Explanation      : 41 ÷ 7 = 5 remainder 6, so q = 5 and r = 6. q * 10 + r = 50 + 6 = 56.
+------------------------------------------------------------------------------
+Q2  [Control Structures]  (multiple choice)   Template #5
+Question: Which describes the output?
+Code (Python):
+    x = 26
+    if x % 2 == 0:
+        print("A")
+    if x % 5 == 0:
+        print("B")
+    else:
+        print("C")
+Options:
+    A) A, then B (two lines)
+    B) B only
+    C) A, then C (two lines)
+    D) C only
+Student response : C) A, then C (two lines)
+Correct answer   : C) A, then C (two lines)
+Result           : CORRECT  (+3.3 pts)
+Explanation      : These are two separate if statements. 26 is divisible by 2 → prints A. The else belongs to the second if: 26 is not divisible by 5 → prints C.
+------------------------------------------------------------------------------
+Q3  [Control Structures]  (multiple choice)   Template #6
+Question: What is printed?
+Code (Python):
+    total = 0
+    for i in range(13):
+        if i % 4 == 0:
+            total += i
+    print(total)
+Options:
+    A) 4
+    B) 24
+    C) 37
+    D) 54
+Student response : C) 37
+Correct answer   : B) 24
+Result           : INCORRECT (0 pts)
+Explanation      : i runs 0–12 and only multiples of 4 are added: 0 + 4 + 8 + 12 = 24.
+------------------------------------------------------------------------------
+Q4  [Variables & Operators]  (multiple choice)   Template #1
+Question: What is printed?
+Code (Python):
+    p = 7
+    q = p
+    p = p + 4
+    print(q)
+Options:
+    A) 4
+    B) 7
+    C) 11
+    D) 18
+Student response : C) 11
+Correct answer   : B) 7
+Result           : INCORRECT (0 pts)
+Explanation      : q copies the value of p (7) at that moment. Changing p afterwards (to 11) does not change q.
+------------------------------------------------------------------------------
+Q5  [Arrays & Matrices]  (multiple choice)   Template #11
+Question: What does m[3][2] give? (row first, then column)
+Code (Python):
+    m = [[34, 24, 36], [21, 25, 27], [40, 19, 4], [11, 10, 17]]
+    print(m[3][2])
+Options:
+    A) 10
+    B) 17
+    C) 34
+    D) 36
+Student response : A) 10
+Correct answer   : B) 17
+Result           : INCORRECT (0 pts)
+Explanation      : m[3] is row 4: [11, 10, 17]; index 2 in that row is 17.
+------------------------------------------------------------------------------
+Q6  [Variables & Operators]  (short answer)   Template #4
+Question: What is the final value of n? (Type a number.)
+Code (Python):
+    n = 11
+    n += 6
+    n *= 3
+    n -= 14 % 5
+    print(n)
+Student response : (not answered)
+Correct answer   : 47
+Result           : INCORRECT (0 pts)
+Explanation      : n: 11 → 17 → 51. On the last line the right side is evaluated first: 14 % 5 = 4, so n = 51 - 4 = 47.
+------------------------------------------------------------------------------
+Q7  [Arrays & Matrices]  (short answer)   Template #12
+Question: What is printed? (Type a number.)
+Code (Python):
+    m = [[8, 5, 9], [3, 5, 2], [4, 9, 7]]
+    total = 0
+    for i in range(3):
+        total += m[i][2 - i]
+    print(total)
+Student response : (not answered)
+Correct answer   : 18
+Result           : INCORRECT (0 pts)
+Explanation      : This walks the anti-diagonal (top-right to bottom-left): 9 + 5 + 4 = 18.
+------------------------------------------------------------------------------
+Q8  [Variables & Operators]  (multiple choice)   Template #2
+Question: What value does result hold? (Remember operator precedence.)
+Code (Python):
+    result = 3 + 5 * 6 - 20 // 4
+Options:
+    A) 7
+    B) 13
+    C) 28
+    D) 43
+Student response : (not answered)
+Correct answer   : C) 28
+Result           : INCORRECT (0 pts)
+Explanation      : Multiplication and division run before addition and subtraction: 3 + 30 - 5 = 28. (Going strictly left-to-right is the classic trap.)
+------------------------------------------------------------------------------
+Q9  [Functions & Scope]  (multiple choice)   Template #9
+Question: What is printed after add() runs?
+Code (Python):
+    count = 5
+    
+    def add():
+        count = 5
+        count += 1
+    
+    add()
+    print(count)
+Options:
+    A) Error
+    B) 3
+    C) 5
+    D) 6
+Student response : (not answered)
+Correct answer   : C) 5
+Result           : INCORRECT (0 pts)
+Explanation      : The count inside add() is a brand-new local variable that shadows the outer one. The outer count is never touched, so it is still 5.
+------------------------------------------------------------------------------
+Q10  [Arrays & Matrices]  (multiple choice)   Template #10
+Question: What is printed? (Think about length and zero-based indexing.)
+Code (Python):
+    arr = [14, 38, 49, 30, 43, 34, 52]
+    print(arr[len(arr) - 1])
+Options:
+    A) 30
+    B) 43
+    C) 49
+    D) 52
+Student response : (not answered)
+Correct answer   : D) 52
+Result           : INCORRECT (0 pts)
+Explanation      : The length is 7, so valid indexes are 0–6 (accessing index 7 would be out of bounds). Index 7 - 1 = 6 holds 52.
+------------------------------------------------------------------------------
+Q11  [Functions & Scope]  (multiple choice)   Template #8
+Question: What is printed?
+Code (Python):
+    def g(x):
+        x = x + 4
+        return x * 4
+    
+    y = 2
+    z = g(y)
+    print(y, z)
+Options:
+    A) 2 8
+    B) 6 24
+    C) 6 8
+    D) 2 24
+Student response : (not answered)
+Correct answer   : D) 2 24
+Result           : INCORRECT (0 pts)
+Explanation      : The parameter x is a copy of y, so y stays 2. Inside g: x becomes 6, and the function returns 6 * 4 = 24.
+------------------------------------------------------------------------------
+Q12  [Control Structures]  (multiple choice)   Template #7
+Question: What is the output? (Numbers are separated by spaces.)
+Code (Python):
+    for i in range(1, 10):
+        if i == 4:
+            continue
+        if i == 8:
+            break
+        print(i, end=" ")
+Options:
+    A) 1 2 3 4 5 6 7
+    B) 1 2 3 5 6 7 8
+    C) 1 2 3 5 6 7 8 9
+    D) 1 2 3 5 6 7
+Student response : (not answered)
+Correct answer   : D) 1 2 3 5 6 7
+Result           : INCORRECT (0 pts)
+Explanation      : continue skips just i = 4. break stops the whole loop when i reaches 8 (before printing it). Printed: 1 2 3 5 6 7.
+------------------------------------------------------------------------------
+
+==============================================================================
+4. PART 2 — CODING TASKS
+==============================================================================
+Task A · FizzBuzz   [Baseline, 15 points, 10 min limit]
+Variant parameters: range 1–50, Fizz = multiples of 2, Buzz = multiples of 7
+Task statement (Python, function fizz_buzz):
+    Write fizz_buzz() that returns a list of 50 strings for the numbers 1 to 50:
+    - multiples of 2 → "Fizz"
+    - multiples of 7 → "Buzz"
+    - multiples of both 2 and 7 → "FizzBuzz"
+    - otherwise → the number as text
+    Starts: 1, Fizz, 3, Fizz, 5, Fizz, Buzz, Fizz, 9, Fizz, 11, Fizz …
+
+Student submission (AUTO-SUBMITTED when the timer ended):
+    def fizz_buzz(1):[50]
+        # Return a list of 50 strings for 1..50
+        out = [2]
+        # your code here
+    for number in range [50]
+        numbers % 2 ==  
+        return out
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [FAIL] Loops over the numbers 1 to 50 (3 pts)
+  [PASS] Tests divisibility by 2 (% 2) (2 pts)
+  [FAIL] Tests divisibility by 7 (% 7) (2 pts)
+  [FAIL] Uses the strings "Fizz" and "Buzz" (2 pts)
+  [FAIL] Handles multiples of both (FizzBuzz) correctly (3 pts)
+  [FAIL] Outputs or collects every result (3 pts)
+SCORE: 2 / 15
+------------------------------------------------------------------------------
+Task B · Filter & Multiply   [Intermediate, 20 points, 15 min limit]
+Variant parameters: keep even numbers, multiply by 2
+Task statement (Python, function filter_and_double):
+    Write filter_and_double(nums) that returns a new list containing only the even numbers from nums, each multiplied by 2. Zero counts as even.
+    [1, 2, 3, 4, 5, 6] → [4, 8, 12]
+    [7, 9, 11] → []
+    [] → []
+
+Student submission (AUTO-SUBMITTED when the timer ended):
+    def filter_and_double(nums):
+        # Return a NEW list: only the even numbers, each multiplied by 2
+            result []
+    
+            number = range 
+            let number = [1, 2, 3, 4, 5, 6]
+            result []
+         
+    
+    result = []
+       
+        return result
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines filter_and_double(...) (3 pts)
+  [FAIL] Loops (or comprehends) over the input (4 pts)
+  [FAIL] Checks for even numbers (% 2 == 0) (5 pts)
+  [FAIL] Multiplies by 2 (5 pts)
+  [FAIL] Builds and returns a result list (3 pts)
+SCORE: 3 / 20
+------------------------------------------------------------------------------
+Task C · Diagonal Difference   [Advanced, 25 points, 20 min limit]
+Variant parameters: worked example matrix [[-2,-5,-1],[3,13,4],[0,-5,3]] → 2
+Task statement (Python, function diagonal_difference):
+    Write diagonal_difference(matrix) for an n × n integer matrix. Return the absolute difference between the sum of the main diagonal (top-left → bottom-right) and the sum of the anti-diagonal (top-right → bottom-left).
+    [[-2, -5, -1],
+    [ 3, 13,  4],
+    [ 0, -5,  3]]
+    main = -2 + 13 + 3 = 14 · anti = -1 + 13 + 0 = 12 → |14 − 12| = 2
+
+Student submission (AUTO-SUBMITTED when the timer ended):
+    def diagonal_difference(matrix):
+        # |sum(main diagonal) - sum(anti-diagonal)| of an n x n matrix
+        result = 0
+        print(len(diagonal_difference))
+        sum = [0][0] + [1][1] + [2][2]
+        anti_sum = [0][n-1-2] + [1][n-1-1] + [2[][n-1-0]
+        return (abs(diagonal_difference))
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines diagonal_difference(...) (3 pts)
+  [PASS] Uses the matrix size (len) (3 pts)
+  [PASS] Sums the main diagonal  [i][i] (7 pts)
+  [PASS] Sums the anti-diagonal  [i][n-1-i] (7 pts)
+  [PASS] Returns an absolute value (abs) (5 pts)
+SCORE: 25 / 25
+------------------------------------------------------------------------------
+
+==============================================================================
+5. NOTES FOR THE REVIEWER
+==============================================================================
+* Quiz marking is exact (answer key generated for this student's variant).
+* JavaScript solutions are executed against test cases. Java and Python solutions are checked by pattern only; a correct but unusual solution may lose points, and an incorrect one that contains the right keywords may gain some. Please read the submissions above before finalising marks.
+* Different students receive different numbers/values for the same question type, so compare students by question TEMPLATE number and section, not by raw answers.
+
+End of record for Moses Anawo.
