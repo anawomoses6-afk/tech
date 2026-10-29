@@ -1,0 +1,2091 @@
+##############################################################################
+CODECIRCUIT — COMPLETE RECORD FOR: Moses Anawo Aidoko
+##############################################################################
+Exported                  : 10/28/2026, 4:14:31 PM  (2026-10-28T15:14:31.379Z)
+Tests in this file        : 3  (every test this student has taken on this computer, oldest first)
+Each test below is a full record: questions, responses, answer key, submitted code, scores and analysis.
+
+SUMMARY OF ALL TESTS
+  #  Form  Language     Date / time                Quiz/40   A/15   B/20   C/25   TOTAL/100  Tier
+  1  C     Java         10/28/2026, 12:35:33 PM    12.8      15     12     21     60.8       Tier 2
+  2  C     Python       10/28/2026, 2:11:37 PM     8         15     17     16     56         Tier 2
+  3  C     JavaScript   10/28/2026, 4:14:16 PM     11.2      3.8    2      0      17         Tier 1
+
+AVERAGES (out of 100)
+  Definitive average (all tests, all forms, all languages): 44.6   [3 test(s)]
+  Form C average                                          : 44.6   [3 test(s)]
+  Java        average (all forms)                      : 60.8   [1 test(s)]
+  Python      average (all forms)                      : 56   [1 test(s)]
+  JavaScript  average (all forms)                      : 17   [1 test(s)]
+  Average quiz score: 10.7 / 40   Task A: 11.3 / 15   Task B: 10.3 / 20   Task C: 12.3 / 25   (Tasks A/B/C differ from form to form)
+
+
+##############################################################################
+TEST 1 OF 3  ·  Form C  ·  Java  ·  60.8 / 100  ·  Tier 2
+##############################################################################
+==============================================================================
+CODECIRCUIT ASSESSMENT RECORD
+==============================================================================
+Student name      : Moses Anawo Aidoko
+Assessment form   : Form C
+Language          : Java
+Submitted         : 10/28/2026, 12:35:33 PM  (2026-10-28T11:35:33.535Z)
+Time taken        : 102 minute(s)
+Tab switches      : 0  (times the student left the assessment tab)
+Variant ID        : 296403080  (questions, numbers, option order and coding parameters are randomised per student)
+Format note       : plain text. Parts are separated by lines of "=". Every question includes the student's response, the answer key and the explanation, so this file can be marked or analysed directly.
+
+==============================================================================
+1. SCORE SUMMARY
+==============================================================================
+TOTAL SCORE       : 60.8 / 100
+PLACEMENT         : Tier 2 · Competent  (score band: 50% – 85% — Functional logic, ready to level up)
+Quiz              : 12.8 / 40   (8 of 25 questions correct)
+Task A            : 15 / 15   (Digit Sum)
+Task B            : 12 / 20   (k-th Largest)
+Task C            : 21 / 25   (Transpose a Grid)
+Weighting         : Quiz 40 + Task A 15 + Task B 20 + Task C 25 = 100 points. Tier 1 < 50, Tier 2 = 50–85, Tier 3 > 85.
+
+Section breakdown:
+  Variables & Operators    57%   (4 / 7 correct)
+  Control Structures        0%   (0 / 7 correct)
+  Functions & Scope        40%   (2 / 5 correct)
+  Arrays & Matrices        33%   (2 / 6 correct)
+  Task A                  100%   (15 / 15 pts)
+  Task B                   60%   (12 / 20 pts)
+  Task C                   84%   (21 / 25 pts)
+
+==============================================================================
+2. ANALYSIS
+==============================================================================
+Strengths  (>= 75%): Task A 100%; Task C 84%
+Focus areas (< 60%): Control Structures 0%; Arrays & Matrices 33%; Functions & Scope 40%; Variables & Operators 57%
+Quiz questions missed: Q1 [Control Structures], Q5 [Arrays & Matrices], Q6 [Arrays & Matrices], Q7 [Functions & Scope], Q9 [Variables & Operators], Q10 [Control Structures], Q11 [Functions & Scope], Q12 [Variables & Operators], Q15 [Variables & Operators], Q16 [Functions & Scope], Q17 [Control Structures], Q18 [Arrays & Matrices], Q19 [Control Structures], Q20 [Control Structures], Q21 [Control Structures], Q22 [Arrays & Matrices], Q25 [Control Structures]
+Stages auto-submitted by the timer: Task B
+
+Recommended track: Standard track coding katas
+  * Follow the standard kata track: two katas a day on functions, array filtering/mapping and nested loops.
+  * Practise 2D traversal on paper first — rows, columns, then both diagonals — then in code.
+  * Write your own edge-case tests (empty input, single element, negatives, zero) for every function.
+  * Target your weakest sections below; aim for 85%+ in every section to graduate to Tier 3.
+
+Targeted remediation:
+  * Control Structures: Build trace tables (i, total, output) for if/else chains and for-loops; practise break vs continue on 5-line programs.
+  * Arrays & Matrices: Draw arrays and grids with index labels; practise last-index (length - 1) and row/column traversal, including diagonals.
+  * Functions & Scope: Practise parameters vs arguments, return values, and local vs global variables; predict output before running.
+  * Variables & Operators: Hand-trace assignments and operator precedence; drill integer division (/, //, Math.floor) and the % operator on small numbers.
+
+==============================================================================
+3. PART 1 — CONCEPT QUIZ (25 questions, in the order this student saw them)
+==============================================================================
+Q1  [Control Structures]  (multiple choice)   Template #9
+Question: What is printed? (Give all printed values in order, separated by commas.)
+Code (Java):
+    int m = 66;
+    if (m >= 69) {
+        System.out.println("pass");
+    } else {
+        System.out.println("retry");
+    }
+    if (m >= 78) {
+        System.out.println("merit");
+    } else if (m >= 53) {
+        System.out.println("near");
+    } else {
+        System.out.println("far");
+    }
+Options:
+    A) retry, near
+    B) (nothing printed)
+    C) retry, merit
+    D) retry
+Student response : B) (nothing printed)
+Correct answer   : A) retry, near
+Result           : INCORRECT (0 pts)
+Explanation      : In an if / else-if chain only the FIRST true branch runs; a separate if after the chain is tested on its own.
+------------------------------------------------------------------------------
+Q2  [Arrays & Matrices]  (multiple choice)   Template #22
+Question: What is printed? (Give the printed values in order, separated by commas.)
+Code (Java):
+    int[] num = {7, 13, 7, 4, 2};
+    for (int i = 0; i < num.length; i++) {
+        num[i] = num[i] + i;
+    }
+    System.out.println(num[0]);
+    System.out.println(num[2]);
+    System.out.println(num[num.length - 1]);
+Options:
+    A) 7, 9, 6
+    B) (nothing printed)
+    C) 7, 9, 9
+    D) 7, 9, 7
+Student response : A) 7, 9, 6
+Correct answer   : A) 7, 9, 6
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Swapping needs a temporary variable to hold one element; changes are made in the array itself, so later reads see the new values.
+------------------------------------------------------------------------------
+Q3  [Functions & Scope]  (multiple choice)   Template #16
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (Java):
+    static int level = 14;
+    
+    static void apply() {
+        int level = 3;
+        level += 4;
+        System.out.println(level);
+    }
+    
+    public static void main(String[] args) {
+        apply();
+        System.out.println(level);
+    }
+Options:
+    A) -1, 14
+    B) 7, 14
+    C) 7, 14, 14
+    D) 12, 14
+Student response : B) 7, 14
+Correct answer   : B) 7, 14
+Result           : CORRECT  (+1.6 pts)
+Explanation      : A variable declared inside a function is a separate local variable — even with the same name as the global, it never changes it.
+------------------------------------------------------------------------------
+Q4  [Variables & Operators]  (multiple choice)   Template #5
+Question: What is printed? (Work out each condition: true or false.)
+Code (Java):
+    int c = 6;
+    int y = 9;
+    int num = 2;
+    int score = 0;
+    if (!(c > 4 || y > 4)) {
+        score += 1;
+    }
+    if (y % 3 == 0 && num > c) {
+        score += 2;
+    }
+    if (c != num || y > c) {
+        score += 4;
+    }
+    System.out.println(score);
+Options:
+    A) 0
+    B) 3
+    C) 4
+    D) 6
+Student response : C) 4
+Correct answer   : C) 4
+Result           : CORRECT  (+1.6 pts)
+Explanation      : score adds 1, 2 and/or 4 depending on which conditions are true. && needs both sides true, || needs just one, ! flips the result.
+------------------------------------------------------------------------------
+Q5  [Arrays & Matrices]  (multiple choice)   Template #25
+Question: What is printed?
+Code (Java):
+    int[][] count = {{6, 6, 9, 8}, {7, 3, 2, 2}, {5, 2, 4, 4}};
+    int total = 0;
+    for (int i = 0; i < count.length; i++) {
+        for (int j = 0; j < count[0].length; j++) {
+            if ((i + j) % 2 == 0) {
+                total += count[i][j];
+            }
+        }
+    }
+    System.out.println(total);
+Options:
+    A) 6
+    B) 18
+    C) 29
+    D) 58
+Student response : B) 18
+Correct answer   : C) 29
+Result           : INCORRECT (0 pts)
+Explanation      : The outer loop walks rows, the inner loop walks columns; trace which cells meet the condition and combine them as the code says.
+------------------------------------------------------------------------------
+Q6  [Arrays & Matrices]  (multiple choice)   Template #23
+Question: What is printed?
+Code (Java):
+    int[] m = {1, 15, 12, 6, 13, 13, 7};
+    int count = 0;
+    for (int i = 1; i < m.length; i++) {
+        if (m[i] > m[i - 1]) {
+            count++;
+        }
+    }
+    System.out.println(count);
+Options:
+    A) -1
+    B) 0
+    C) 2
+    D) 3
+Student response : B) 0
+Correct answer   : C) 2
+Result           : INCORRECT (0 pts)
+Explanation      : Comparing a[i] with a[i-1] (or a[i+1]) needs the loop to stop one short — trace the pairs one by one.
+------------------------------------------------------------------------------
+Q7  [Functions & Scope]  (multiple choice)   Template #18
+Question: What is printed? (Each call prints on its own line; give the values in order, separated by commas.)
+Code (Java):
+    static int shift(int n, int k) {
+        int c = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % k == 0) {
+                c += i;
+            }
+        }
+        return c;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(shift(7, 3));
+        System.out.println(shift(6, 3));
+    }
+Options:
+    A) 7, 7
+    B) 9, 9, 9
+    C) 9, 3
+    D) 9, 9
+Student response : C) 9, 3
+Correct answer   : D) 9, 9
+Result           : INCORRECT (0 pts)
+Explanation      : Each call starts with fresh local variables; trace the loop inside the function for each argument.
+------------------------------------------------------------------------------
+Q8  [Variables & Operators]  (multiple choice)   Template #2
+Question: What value is printed? (Remember operator precedence.)
+Code (Java):
+    int d = 7;
+    int count = 3;
+    int c = 4;
+    int b = 2;
+    int result = d + count * (c - b);
+    System.out.println(result);
+Options:
+    A) 1
+    B) 13
+    C) 25
+    D) 42
+Student response : B) 13
+Correct answer   : B) 13
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Multiplication, division and remainder bind tighter than addition and subtraction; brackets go first; equal-precedence operators run left to right.
+------------------------------------------------------------------------------
+Q9  [Variables & Operators]  (short answer)   Template #4
+Question: What is printed? (Type a number.)
+Code (Java):
+    int amount = 25;
+    amount += 9;
+    amount *= 2;
+    amount -= 6;
+    amount /= 4;
+    amount++;
+    System.out.println(amount);
+Student response : amount+= 9
+Correct answer   : 16
+Result           : INCORRECT (0 pts)
+Explanation      : Apply each compound assignment in order to the CURRENT value of amount; the final ++ adds one. Final: 16.
+------------------------------------------------------------------------------
+Q10  [Control Structures]  (multiple choice)   Template #10
+Question: What is printed?
+Code (Java):
+    int total = 0;
+    for (int i = 1; i <= 12; i++) {
+        if (i % 3 == 0) {
+            total += i;
+        }
+    }
+    System.out.println(total);
+Options:
+    A) 15
+    B) 22
+    C) 30
+    D) 48
+Student response : A) 15
+Correct answer   : C) 30
+Result           : INCORRECT (0 pts)
+Explanation      : Step through each loop pass, updating the accumulator only when the condition is true. Remember whether the range includes its end value.
+------------------------------------------------------------------------------
+Q11  [Functions & Scope]  (multiple choice)   Template #19
+Question: What is printed? (Give the values in order, separated by commas.)
+Code (Java):
+    static void step(int[] a, int v) {
+        v = v + 2;
+        a[1] = v;
+    }
+    
+    public static void main(String[] args) {
+        int[] amount = {9, 8, 8, 12};
+        int level = 8;
+        step(amount, level);
+        System.out.println(amount[1]);
+        System.out.println(level);
+    }
+Options:
+    A) 10
+    B) 11, 8
+    C) 10, 8
+    D) 12, 8
+Student response : B) 11, 8
+Correct answer   : C) 10, 8
+Result           : INCORRECT (0 pts)
+Explanation      : An array parameter shares the SAME array, so changes made inside the function are visible to the caller; a plain int parameter is only a copy.
+------------------------------------------------------------------------------
+Q12  [Variables & Operators]  (multiple choice)   Template #7
+Question: What is printed?
+Code (Java):
+    int y = 24;
+    int p = 35;
+    int avg = y + p / 2;
+    int rest = (y + p) % 7;
+    System.out.println(avg + rest);
+Options:
+    A) 38
+    B) 44
+    C) 46
+    D) 123
+Student response : A) 38
+Correct answer   : B) 44
+Result           : INCORRECT (0 pts)
+Explanation      : Division and remainder are done on the exact values shown — follow each variable.
+------------------------------------------------------------------------------
+Q13  [Arrays & Matrices]  (multiple choice)   Template #21
+Question: What is printed?
+Code (Java):
+    int[] count = {3, 24, 17, 3, 20, 24, 19, 7};
+    int total = 0;
+    for (int x : count) {
+        if (x % 2 == 0) {
+            total += x;
+        }
+    }
+    System.out.println(total);
+Options:
+    A) 0
+    B) 54
+    C) 68
+    D) 117
+Student response : C) 68
+Correct answer   : C) 68
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Walk through the array once, updating the running answer (largest, count, position, or sum) whenever the condition holds.
+------------------------------------------------------------------------------
+Q14  [Functions & Scope]  (multiple choice)   Template #17
+Question: What is printed?
+Code (Java):
+    static int adjust(int n) {
+        return n + 6;
+    }
+    
+    static int process(int n) {
+        return n * 2;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(process(adjust(4)));
+    }
+Options:
+    A) 10
+    B) 20
+    C) 24
+    D) 48
+Student response : B) 20
+Correct answer   : B) 20
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Evaluate the innermost call first; its result becomes the argument of the next call. Work outwards step by step.
+------------------------------------------------------------------------------
+Q15  [Variables & Operators]  (multiple choice)   Template #3
+Question: What is printed? (Integer division and remainder.)
+Code (Java):
+    int p = 332;
+    int k = p / 100;
+    int z = p / 10 % 10;
+    System.out.println(k + z);
+Options:
+    A) 3
+    B) 5
+    C) 6
+    D) 12
+Student response : A) 3
+Correct answer   : C) 6
+Result           : INCORRECT (0 pts)
+Explanation      : n / 100 is the hundreds digit; (n / 10) % 10 is the tens digit.
+------------------------------------------------------------------------------
+Q16  [Functions & Scope]  (multiple choice)   Template #15
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (Java):
+    static void step(int n) {
+        n = n * 5;
+        System.out.println(n);
+    }
+    
+    public static void main(String[] args) {
+        int m = 6;
+        step(m);
+        System.out.println(m);
+    }
+Options:
+    A) 30, 6
+    B) 30
+    C) (nothing printed)
+    D) 24, 6
+Student response : B) 30
+Correct answer   : A) 30, 6
+Result           : INCORRECT (0 pts)
+Explanation      : Arguments are copied into the parameters, so changing a parameter does not change the caller's variable. Only the returned value comes back — and a function stops at its first return.
+------------------------------------------------------------------------------
+Q17  [Control Structures]  (multiple choice)   Template #14
+Question: What is printed?
+Code (Java):
+    int[] z = {21, 10, 5, 28, 22, 27, 24};
+    int total = 0;
+    int i = 0;
+    while (i < z.length && z[i] <= 12) {
+        total += z[i];
+        i++;
+    }
+    System.out.println(i);
+Options:
+    A) -3
+    B) -2
+    C) 0
+    D) 1
+Student response : D) 1
+Correct answer   : C) 0
+Result           : INCORRECT (0 pts)
+Explanation      : Trace the array index by index; an early break/exit stops the search, otherwise the loop keeps updating the result.
+------------------------------------------------------------------------------
+Q18  [Arrays & Matrices]  (multiple choice)   Template #24
+Question: What is printed? (Rows and columns both start at 0.)
+Code (Java):
+    int[][] level = {{5, 6, 8, 7}, {2, 2, 2, 4}, {1, 7, 9, 1}};
+    System.out.println(level[1][2]);
+    System.out.println(level[level.length - 1][0]);
+    System.out.println(level[0][level[0].length - 1]);
+Options:
+    A) 2, 1, 8
+    B) 2, 5, 7
+    C) 2, 1, 7
+    D) 2, 7
+Student response : D) 2, 7
+Correct answer   : C) 2, 1, 7
+Result           : INCORRECT (0 pts)
+Explanation      : matrix[row][col]: the first index picks the row, the second the column. Diagonal cells have row = col; the anti-diagonal has col = n - 1 - row.
+------------------------------------------------------------------------------
+Q19  [Control Structures]  (multiple choice)   Template #11
+Question: What is printed?
+Code (Java):
+    int a = 723;
+    int steps = 0;
+    while (a > 0) {
+        a = a / 10;
+        steps++;
+    }
+    System.out.println(steps);
+Options:
+    A) 0
+    B) 1
+    C) 2
+    D) 3
+Student response : B) 1
+Correct answer   : D) 3
+Result           : INCORRECT (0 pts)
+Explanation      : Trace the loop: test the condition, run the body, update, and test again. The loop stops the first time the condition is false.
+------------------------------------------------------------------------------
+Q20  [Control Structures]  (multiple choice)   Template #8
+Question: What is printed? (Several lines may print — give them in order, separated by commas.)
+Code (Java):
+    int level = 17;
+    if (level > 8) {
+        System.out.println("A");
+    }
+    if (level > 14) {
+        System.out.println("B");
+    }
+    if (level % 5 == 0) {
+        System.out.println("C");
+    }
+    System.out.println("end");
+Options:
+    A) end, B, A
+    B) A, B, C, end
+    C) A, end
+    D) A, B, end
+Student response : A) end, B, A
+Correct answer   : D) A, B, end
+Result           : INCORRECT (0 pts)
+Explanation      : These are separate if statements (no else), so EVERY condition is tested and any that are true print.
+------------------------------------------------------------------------------
+Q21  [Control Structures]  (multiple choice)   Template #13
+Question: What is printed?
+Code (Java):
+    int total = 0;
+    for (int i = 0; i < 14; i++) {
+        if (i > 11) {
+            break;
+        }
+        if (i % 4 == 1) {
+            continue;
+        }
+        total += i * 2;
+    }
+    System.out.println(total);
+Options:
+    A) 0
+    B) 30
+    C) 102
+    D) 116
+Student response : B) 30
+Correct answer   : C) 102
+Result           : INCORRECT (0 pts)
+Explanation      : continue skips the rest of THIS pass; break leaves the loop completely. Track which values reach the line after the if.
+------------------------------------------------------------------------------
+Q22  [Arrays & Matrices]  (multiple choice)   Template #20
+Question: What is printed? (Indexes start at 0. Give the printed values in order, separated by commas.)
+Code (Java):
+    int[] level = {15, 2, 8, 14, 5, 6};
+    System.out.println(level[0]);
+    System.out.println(level[level.length - 1]);
+    System.out.println(level[3] + level[3 + 1]);
+Options:
+    A) 15, 14, 19
+    B) 19, 6, 15
+    C) 15, 6, 19
+    D) 15, 6, 20
+Student response : D) 15, 6, 20
+Correct answer   : C) 15, 6, 19
+Result           : INCORRECT (0 pts)
+Explanation      : The first element is index 0, the last is length - 1. Evaluate the index expression first, then read the element at that position.
+------------------------------------------------------------------------------
+Q23  [Variables & Operators]  (multiple choice)   Template #1
+Question: What is printed?
+Code (Java):
+    int level = 4;
+    int a = 14;
+    level = a;
+    a = level + 6;
+    System.out.println(level + a);
+Options:
+    A) 34
+    B) 35
+    C) 36
+    D) 98
+Student response : A) 34
+Correct answer   : A) 34
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Each assignment uses the CURRENT values — x is overwritten first, so y is built from the new x.
+------------------------------------------------------------------------------
+Q24  [Variables & Operators]  (multiple choice)   Template #6
+Question: What is printed?
+Code (Java):
+    int value = 51;
+    int k = value % 6;
+    if (k == 0) {
+        System.out.println(value / 6);
+    } else {
+        System.out.println(value - k);
+    }
+Options:
+    A) 8
+    B) 48
+    C) 50
+    D) 54
+Student response : B) 48
+Correct answer   : B) 48
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Check the remainder first: if it is 0 the number divides evenly, otherwise the else branch runs.
+------------------------------------------------------------------------------
+Q25  [Control Structures]  (multiple choice)   Template #12
+Question: What is printed?
+Code (Java):
+    int count = 0;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (j < i) {
+                count++;
+            }
+        }
+    }
+    System.out.println(count);
+Options:
+    A) 2
+    B) 3
+    C) 6
+    D) 9
+Student response : C) 6
+Correct answer   : B) 3
+Result           : INCORRECT (0 pts)
+Explanation      : The inner loop runs completely for each pass of the outer loop. Count the (i, j) pairs that satisfy the condition.
+------------------------------------------------------------------------------
+
+==============================================================================
+4. PART 2 — CODING TASKS
+==============================================================================
+Task A · Digit Sum   [Baseline, 15 points, 10 min limit]
+Variant parameters: sums odd digits
+Task statement (Java, function digitSum):
+    Write digitSum(n) that returns the sum of the odd digits of the non-negative integer n. Digits that are not odd are ignored.
+    digitSum(8574) → 12
+    digitSum(94) → 9
+
+Student submission:
+    public class digitSum {
+        // Write digitSum(n) that returns the sum of the odd digits of the non-negative integer
+        // n. Digits that are not odd are ignored.
+        static int digitSum(int n) {
+            int result = 0;
+            int sumOfOdd = 0;
+            for(int count = 0; count < number.length; count++) {
+            if(number % 2 == 0)
+            (n % 10) 
+            // your code here
+            return result;
+        }
+    }
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines digitSum(...) (2 pts)
+  [PASS] Loops over the digits (3 pts)
+  [PASS] Extracts digits (n % 10, or converts to text) (4 pts)
+  [PASS] Tests the digit parity (% 2 or & 1) (3 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 15 / 15
+------------------------------------------------------------------------------
+Task B · k-th Largest   [Intermediate, 20 points, 15 min limit]
+Variant parameters: 3rd largest distinct
+Task statement (Java, function kthLargest):
+    Write kthLargest(nums) that returns the third largest DISTINCT value in nums (duplicates count once). If there are fewer than 3 distinct values, return -1.
+    kthLargest([5, 9, 2, 9, 7, 3]) → 5
+    kthLargest([20, 16, 0, 11, 12, 29, 9, 9]) → 16
+
+Student submission (AUTO-SUBMITTED when the timer ended):
+    public class kthLargest {
+        // Write kthLargest(nums) that returns the third largest DISTINCT value in nums
+        // (duplicates count once). If there are fewer than 3 distinct values, return -1.
+        static int kthLargest(int[] nums) {
+            int result = 0;
+            int largervalue = 0;
+            for(int index = 1; index < number.length; index++) {
+            if(number > largest) {
+                largest = number
+             
+            
+            // your code here
+            return result;
+        }
+    }
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines kthLargest(...) (2 pts)
+  [PASS] Loops through the list (3 pts)
+  [FAIL] Ignores repeated values (set / seen / != checks) (5 pts)
+  [PASS] Finds larger values by comparing (>) (4 pts)
+  [FAIL] Returns -1 when there are too few distinct values (3 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 12 / 20
+------------------------------------------------------------------------------
+Task C · Transpose a Grid   [Advanced, 25 points, 20 min limit]
+Variant parameters: transpose, then +5
+Task statement (Java, function flipGrid):
+    Write flipGrid(m) for a rectangular grid (rows × columns, not necessarily square). Return a new grid that is the transpose of m (rows become columns), with 5 added to every value.
+    flipGrid([[1, 4, 3], [3, 1, 4]]) → [[6, 8], [9, 6], [8, 9]]
+    flipGrid([[1, 0], [-3, -2], [2, 0]]) → [[6, 2, 7], [5, 3, 5]]
+
+Student submission:
+    public class flipGrid {
+        // Write flipGrid(m) for a rectangular grid (rows × columns, not necessarily square).
+        // Return a new grid that is the transpose of m (rows become columns), with 5 added to
+        // every value.
+        static int[][] flipGrid(int[][] m) {
+            int[][] result = new int[0][0];
+            for(int row = 0; row < number.length; row++) {
+            for(int column number[rows].length -1; column > = 0; column--] {
+            m[j][i] = [i][j]
+            m[0].length = number of column;
+            
+        }
+    )
+            // your code here
+            return result;
+        }
+    }
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines flipGrid(...) (2 pts)
+  [PASS] Uses nested loops over rows and columns (5 pts)
+  [PASS] Swaps the indexes (reads m[j][i] while writing [i][j]) (6 pts)
+  [PASS] Uses the number of columns (m[0].length) (5 pts)
+  [FAIL] Adds the constant to each value (4 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 21 / 25
+------------------------------------------------------------------------------
+
+==============================================================================
+5. NOTES FOR THE REVIEWER
+==============================================================================
+* Quiz marking is exact (answer key generated for this student's variant).
+* JavaScript solutions are executed against test cases. Java and Python solutions are checked by pattern only; a correct but unusual solution may lose points, and an incorrect one that contains the right keywords may gain some. Please read the submissions above before finalising marks.
+* Different students receive different numbers/values for the same question type, so compare students by question TEMPLATE number and section, not by raw answers.
+
+End of record for Moses Anawo Aidoko.
+
+
+
+##############################################################################
+TEST 2 OF 3  ·  Form C  ·  Python  ·  56 / 100  ·  Tier 2
+##############################################################################
+==============================================================================
+CODECIRCUIT ASSESSMENT RECORD
+==============================================================================
+Student name      : Moses Anawo Aidoko
+Assessment form   : Form C
+Language          : Python
+Submitted         : 10/28/2026, 2:11:37 PM  (2026-10-28T13:11:37.322Z)
+Time taken        : 78 minute(s)
+Tab switches      : 0  (times the student left the assessment tab)
+Variant ID        : 1995353912  (questions, numbers, option order and coding parameters are randomised per student)
+Format note       : plain text. Parts are separated by lines of "=". Every question includes the student's response, the answer key and the explanation, so this file can be marked or analysed directly.
+
+==============================================================================
+1. SCORE SUMMARY
+==============================================================================
+TOTAL SCORE       : 56 / 100
+PLACEMENT         : Tier 2 · Competent  (score band: 50% – 85% — Functional logic, ready to level up)
+Quiz              : 8 / 40   (5 of 25 questions correct)
+Task A            : 15 / 15   (Digit Sum)
+Task B            : 17 / 20   (k-th Largest)
+Task C            : 16 / 25   (Transpose a Grid)
+Weighting         : Quiz 40 + Task A 15 + Task B 20 + Task C 25 = 100 points. Tier 1 < 50, Tier 2 = 50–85, Tier 3 > 85.
+
+Section breakdown:
+  Variables & Operators    29%   (2 / 7 correct)
+  Control Structures       14%   (1 / 7 correct)
+  Functions & Scope        20%   (1 / 5 correct)
+  Arrays & Matrices        17%   (1 / 6 correct)
+  Task A                  100%   (15 / 15 pts)
+  Task B                   85%   (17 / 20 pts)
+  Task C                   64%   (16 / 25 pts)
+
+==============================================================================
+2. ANALYSIS
+==============================================================================
+Strengths  (>= 75%): Task A 100%; Task B 85%
+Focus areas (< 60%): Control Structures 14%; Arrays & Matrices 17%; Functions & Scope 20%; Variables & Operators 29%
+Quiz questions missed: Q2 [Arrays & Matrices], Q3 [Control Structures], Q5 [Functions & Scope], Q6 [Control Structures], Q7 [Control Structures], Q9 [Variables & Operators], Q10 [Arrays & Matrices], Q11 [Functions & Scope], Q14 [Control Structures], Q15 [Control Structures], Q16 [Variables & Operators], Q17 [Functions & Scope], Q18 [Variables & Operators], Q19 [Arrays & Matrices], Q20 [Variables & Operators] (unanswered), Q21 [Functions & Scope] (unanswered), Q22 [Variables & Operators] (unanswered), Q23 [Arrays & Matrices] (unanswered), Q24 [Arrays & Matrices] (unanswered), Q25 [Control Structures] (unanswered)
+Stages auto-submitted by the timer: Quiz
+
+Recommended track: Standard track coding katas
+  * Follow the standard kata track: two katas a day on functions, array filtering/mapping and nested loops.
+  * Practise 2D traversal on paper first — rows, columns, then both diagonals — then in code.
+  * Write your own edge-case tests (empty input, single element, negatives, zero) for every function.
+  * Target your weakest sections below; aim for 85%+ in every section to graduate to Tier 3.
+
+Targeted remediation:
+  * Control Structures: Build trace tables (i, total, output) for if/else chains and for-loops; practise break vs continue on 5-line programs.
+  * Arrays & Matrices: Draw arrays and grids with index labels; practise last-index (length - 1) and row/column traversal, including diagonals.
+  * Functions & Scope: Practise parameters vs arguments, return values, and local vs global variables; predict output before running.
+  * Variables & Operators: Hand-trace assignments and operator precedence; drill integer division (/, //, Math.floor) and the % operator on small numbers.
+
+==============================================================================
+3. PART 1 — CONCEPT QUIZ (25 questions, in the order this student saw them)
+==============================================================================
+Q1  [Control Structures]  (multiple choice)   Template #13
+Question: What is printed?
+Code (Python):
+    total = 0
+    for i in range(13):
+        if i > 6:
+            break
+        if i % 3 == 1:
+            continue
+        total += i * 2
+    print(total)
+Options:
+    A) 10
+    B) 28
+    C) 32
+    D) 42
+Student response : C) 32
+Correct answer   : C) 32
+Result           : CORRECT  (+1.6 pts)
+Explanation      : continue skips the rest of THIS pass; break leaves the loop completely. Track which values reach the line after the if.
+------------------------------------------------------------------------------
+Q2  [Arrays & Matrices]  (multiple choice)   Template #24
+Question: What is printed? (Rows and columns both start at 0.)
+Code (Python):
+    level = [[6, 8, 8, 1], [8, 7, 2, 7], [1, 8, 9, 4]]
+    print(level[1][2])
+    print(level[len(level) - 1][0])
+    print(level[0][len(level[0]) - 1])
+Options:
+    A) (nothing printed)
+    B) 2, 6, 1
+    C) 2, 1, 8
+    D) 2, 1, 1
+Student response : C) 2, 1, 8
+Correct answer   : D) 2, 1, 1
+Result           : INCORRECT (0 pts)
+Explanation      : matrix[row][col]: the first index picks the row, the second the column. Diagonal cells have row = col; the anti-diagonal has col = n - 1 - row.
+------------------------------------------------------------------------------
+Q3  [Control Structures]  (multiple choice)   Template #14
+Question: What is printed?
+Code (Python):
+    z = [28, 9, 10, 11, 28, 7, 30, 14]
+    total = 0
+    i = 0
+    while i < len(z) and z[i] <= 13:
+        total += z[i]
+        i += 1
+    print(i)
+Options:
+    A) -2
+    B) 0
+    C) 1
+    D) 3
+Student response : D) 3
+Correct answer   : B) 0
+Result           : INCORRECT (0 pts)
+Explanation      : Trace the array index by index; an early break/exit stops the search, otherwise the loop keeps updating the result.
+------------------------------------------------------------------------------
+Q4  [Variables & Operators]  (multiple choice)   Template #6
+Question: What is printed?
+Code (Python):
+    value = 198
+    k = value % 7
+    if k == 0:
+        print(value // 7)
+    else:
+        print(value - k)
+Options:
+    A) 170
+    B) 192
+    C) 196
+    D) 200
+Student response : C) 196
+Correct answer   : C) 196
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Check the remainder first: if it is 0 the number divides evenly, otherwise the else branch runs.
+------------------------------------------------------------------------------
+Q5  [Functions & Scope]  (multiple choice)   Template #17
+Question: What is printed?
+Code (Python):
+    def adjust(n):
+        return n + 5
+    
+    def process(n):
+        return n * 3
+    
+    print(process(adjust(2)))
+Options:
+    A) 10
+    B) 18
+    C) 21
+    D) 28
+Student response : B) 18
+Correct answer   : C) 21
+Result           : INCORRECT (0 pts)
+Explanation      : Evaluate the innermost call first; its result becomes the argument of the next call. Work outwards step by step.
+------------------------------------------------------------------------------
+Q6  [Control Structures]  (multiple choice)   Template #12
+Question: What is printed?
+Code (Python):
+    count = 0
+    for i in range(5):
+        for j in range(3):
+            if j < i:
+                count += 1
+    print(count)
+Options:
+    A) 3
+    B) 9
+    C) 10
+    D) 12
+Student response : D) 12
+Correct answer   : B) 9
+Result           : INCORRECT (0 pts)
+Explanation      : The inner loop runs completely for each pass of the outer loop. Count the (i, j) pairs that satisfy the condition.
+------------------------------------------------------------------------------
+Q7  [Control Structures]  (multiple choice)   Template #11
+Question: What is printed?
+Code (Python):
+    a = 538
+    steps = 0
+    while a > 0:
+        a = a // 10
+        steps += 1
+    print(steps)
+Options:
+    A) 0
+    B) 3
+    C) 4
+    D) 5
+Student response : C) 4
+Correct answer   : B) 3
+Result           : INCORRECT (0 pts)
+Explanation      : Trace the loop: test the condition, run the body, update, and test again. The loop stops the first time the condition is false.
+------------------------------------------------------------------------------
+Q8  [Variables & Operators]  (multiple choice)   Template #1
+Question: What is printed?
+Code (Python):
+    level = 8
+    a = 18
+    level = a
+    a = level + 6
+    print(level + a)
+Options:
+    A) 30
+    B) 41
+    C) 42
+    D) 126
+Student response : C) 42
+Correct answer   : C) 42
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Each assignment uses the CURRENT values — x is overwritten first, so y is built from the new x.
+------------------------------------------------------------------------------
+Q9  [Variables & Operators]  (multiple choice)   Template #5
+Question: What is printed? (Work out each condition: true or false.)
+Code (Python):
+    c = 8
+    y = 9
+    num = 10
+    score = 0
+    if not (c > 5 or y > 5):
+        score += 1
+    if y % 3 == 0 and num > c:
+        score += 2
+    if c != num or y > c:
+        score += 4
+    print(score)
+Options:
+    A) 2
+    B) 4
+    C) 6
+    D) 8
+Student response : A) 2
+Correct answer   : C) 6
+Result           : INCORRECT (0 pts)
+Explanation      : score adds 1, 2 and/or 4 depending on which conditions are true. && needs both sides true, || needs just one, ! flips the result.
+------------------------------------------------------------------------------
+Q10  [Arrays & Matrices]  (multiple choice)   Template #20
+Question: What is printed? (Indexes start at 0. Give the printed values in order, separated by commas.)
+Code (Python):
+    level = [17, 15, 5, 13, 13]
+    print(level[0])
+    print(level[len(level) - 1])
+    print(level[1] + level[1 + 1])
+Options:
+    A) 17, 13, 28
+    B) 17, 13, 20
+    C) 17, 13
+    D) 17, 13, 10
+Student response : A) 17, 13, 28
+Correct answer   : B) 17, 13, 20
+Result           : INCORRECT (0 pts)
+Explanation      : The first element is index 0, the last is length - 1. Evaluate the index expression first, then read the element at that position.
+------------------------------------------------------------------------------
+Q11  [Functions & Scope]  (multiple choice)   Template #18
+Question: What is printed? (Each call prints on its own line; give the values in order, separated by commas.)
+Code (Python):
+    def shift(n, k):
+        c = 0
+        for i in range(1, n + 1):
+            if i % k == 0:
+                c += i
+        return c
+    
+    print(shift(8, 3))
+    print(shift(6, 3))
+Options:
+    A) 9
+    B) 3, 3
+    C) 0, 0
+    D) 9, 9
+Student response : B) 3, 3
+Correct answer   : D) 9, 9
+Result           : INCORRECT (0 pts)
+Explanation      : Each call starts with fresh local variables; trace the loop inside the function for each argument.
+------------------------------------------------------------------------------
+Q12  [Functions & Scope]  (multiple choice)   Template #16
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (Python):
+    level = 14
+    
+    def apply():
+        level = 5
+        level += 4
+        print(level)
+    
+    apply()
+    print(level)
+Options:
+    A) 9
+    B) 9, 14
+    C) 20, 14
+    D) 9, 14, 14
+Student response : B) 9, 14
+Correct answer   : B) 9, 14
+Result           : CORRECT  (+1.6 pts)
+Explanation      : A variable declared inside a function is a separate local variable — even with the same name as the global, it never changes it.
+------------------------------------------------------------------------------
+Q13  [Arrays & Matrices]  (multiple choice)   Template #25
+Question: What is printed?
+Code (Python):
+    count = [[2, 3, 8, 8], [8, 9, 3, 3], [1, 2, 9, 6]]
+    total = 0
+    for i in range(len(count)):
+        for j in range(len(count[0])):
+            if (i + j) % 2 == 0:
+                total += count[i][j]
+    print(total)
+Options:
+    A) 2
+    B) 15
+    C) 32
+    D) 62
+Student response : C) 32
+Correct answer   : C) 32
+Result           : CORRECT  (+1.6 pts)
+Explanation      : The outer loop walks rows, the inner loop walks columns; trace which cells meet the condition and combine them as the code says.
+------------------------------------------------------------------------------
+Q14  [Control Structures]  (multiple choice)   Template #10
+Question: What is printed?
+Code (Python):
+    total = 0
+    for i in range(1, 11):
+        if i % 3 == 0:
+            total += i
+    print(total)
+Options:
+    A) 3
+    B) 18
+    C) 30
+    D) 37
+Student response : C) 30
+Correct answer   : B) 18
+Result           : INCORRECT (0 pts)
+Explanation      : Step through each loop pass, updating the accumulator only when the condition is true. Remember whether the range includes its end value.
+------------------------------------------------------------------------------
+Q15  [Control Structures]  (multiple choice)   Template #8
+Question: What is printed? (Several lines may print — give them in order, separated by commas.)
+Code (Python):
+    level = 18
+    if level > 12:
+        print("A")
+    if level > 22:
+        print("B")
+    if level % 3 == 0:
+        print("C")
+    print("end")
+Options:
+    A) A, B, C, end
+    B) A, C
+    C) A, C, end
+    D) (nothing printed)
+Student response : A) A, B, C, end
+Correct answer   : C) A, C, end
+Result           : INCORRECT (0 pts)
+Explanation      : These are separate if statements (no else), so EVERY condition is tested and any that are true print.
+------------------------------------------------------------------------------
+Q16  [Variables & Operators]  (multiple choice)   Template #3
+Question: What is printed? (Integer division and remainder.)
+Code (Python):
+    p = 784
+    k = p // 100
+    z = p // 10 % 10
+    print(k + z)
+Options:
+    A) 7
+    B) 12
+    C) 15
+    D) 56
+Student response : B) 12
+Correct answer   : C) 15
+Result           : INCORRECT (0 pts)
+Explanation      : n / 100 is the hundreds digit; (n / 10) % 10 is the tens digit.
+------------------------------------------------------------------------------
+Q17  [Functions & Scope]  (multiple choice)   Template #15
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (Python):
+    def step(n):
+        n = n * 4
+        print(n)
+    
+    m = 4
+    step(m)
+    print(m)
+Options:
+    A) 4
+    B) 16
+    C) 16, 4
+    D) 12, 4
+Student response : B) 16
+Correct answer   : C) 16, 4
+Result           : INCORRECT (0 pts)
+Explanation      : Arguments are copied into the parameters, so changing a parameter does not change the caller's variable. Only the returned value comes back — and a function stops at its first return.
+------------------------------------------------------------------------------
+Q18  [Variables & Operators]  (multiple choice)   Template #7
+Question: What is printed?
+Code (Python):
+    y = 33
+    p = 38
+    avg = y + p // 2
+    rest = (y + p) % 7
+    print(avg + rest)
+Options:
+    A) 34
+    B) 53
+    C) 57
+    D) 72
+Student response : C) 57
+Correct answer   : B) 53
+Result           : INCORRECT (0 pts)
+Explanation      : Division and remainder are done on the exact values shown — follow each variable.
+------------------------------------------------------------------------------
+Q19  [Arrays & Matrices]  (multiple choice)   Template #21
+Question: What is printed?
+Code (Python):
+    count = [10, 2, 10, 19, 5, 3, 24]
+    total = 0
+    for x in count:
+        if x % 4 == 0:
+            total += x
+    print(total)
+Options:
+    A) 5
+    B) 24
+    C) 25
+    D) 49
+Student response : A) 5
+Correct answer   : B) 24
+Result           : INCORRECT (0 pts)
+Explanation      : Walk through the array once, updating the running answer (largest, count, position, or sum) whenever the condition holds.
+------------------------------------------------------------------------------
+Q20  [Variables & Operators]  (multiple choice)   Template #2
+Question: What value is printed? (Remember operator precedence.)
+Code (Python):
+    d = 9
+    count = 3
+    c = 4
+    b = 5
+    result = (d - count) + (c + b)
+    print(result)
+Options:
+    A) 5
+    B) 15
+    C) 21
+    D) 26
+Student response : (not answered)
+Correct answer   : B) 15
+Result           : INCORRECT (0 pts)
+Explanation      : Multiplication, division and remainder bind tighter than addition and subtraction; brackets go first; equal-precedence operators run left to right.
+------------------------------------------------------------------------------
+Q21  [Functions & Scope]  (multiple choice)   Template #19
+Question: What is printed? (Give the values in order, separated by commas.)
+Code (Python):
+    def step(a, v):
+        v = v + 2
+        a[1] = v
+    
+    amount = [4, 6, 12, 12]
+    level = 6
+    step(amount, level)
+    print(amount[1])
+    print(level)
+Options:
+    A) 8, 6
+    B) 7, 6
+    C) 10, 6
+    D) 4, 6
+Student response : (not answered)
+Correct answer   : A) 8, 6
+Result           : INCORRECT (0 pts)
+Explanation      : An array parameter shares the SAME array, so changes made inside the function are visible to the caller; a plain int parameter is only a copy.
+------------------------------------------------------------------------------
+Q22  [Variables & Operators]  (short answer)   Template #4
+Question: What is printed? (Type a number.)
+Code (Python):
+    amount = 30
+    amount += 6
+    amount *= 3
+    amount -= 12
+    amount //= 3
+    amount += 1
+    print(amount)
+Student response : (not answered)
+Correct answer   : 33
+Result           : INCORRECT (0 pts)
+Explanation      : Apply each compound assignment in order to the CURRENT value of amount; the final ++ adds one. Final: 33.
+------------------------------------------------------------------------------
+Q23  [Arrays & Matrices]  (multiple choice)   Template #23
+Question: What is printed?
+Code (Python):
+    m = [6, 5, 7, 12, 5, 3, 5, 14]
+    count = 0
+    for i in range(1, len(m)):
+        if m[i] > m[i - 1]:
+            count += 1
+    print(count)
+Options:
+    A) 0
+    B) 2
+    C) 3
+    D) 4
+Student response : (not answered)
+Correct answer   : D) 4
+Result           : INCORRECT (0 pts)
+Explanation      : Comparing a[i] with a[i-1] (or a[i+1]) needs the loop to stop one short — trace the pairs one by one.
+------------------------------------------------------------------------------
+Q24  [Arrays & Matrices]  (multiple choice)   Template #22
+Question: What is printed? (Give the printed values in order, separated by commas.)
+Code (Python):
+    num = [19, 16, 4, 3, 10]
+    for i in range(len(num)):
+        num[i] = num[i] + i
+    print(num[0])
+    print(num[2])
+    print(num[len(num) - 1])
+Options:
+    A) 19, 14
+    B) 6, 14
+    C) 14, 6, 19
+    D) 19, 6, 14
+Student response : (not answered)
+Correct answer   : D) 19, 6, 14
+Result           : INCORRECT (0 pts)
+Explanation      : Swapping needs a temporary variable to hold one element; changes are made in the array itself, so later reads see the new values.
+------------------------------------------------------------------------------
+Q25  [Control Structures]  (multiple choice)   Template #9
+Question: What is printed? (Give all printed values in order, separated by commas.)
+Code (Python):
+    m = 40
+    if m >= 64:
+        print("pass")
+    else:
+        print("retry")
+    if m >= 79:
+        print("merit")
+    elif m >= 49:
+        print("near")
+    else:
+        print("far")
+Options:
+    A) retry, far
+    B) retry, merit
+    C) far, retry
+    D) (nothing printed)
+Student response : (not answered)
+Correct answer   : A) retry, far
+Result           : INCORRECT (0 pts)
+Explanation      : In an if / else-if chain only the FIRST true branch runs; a separate if after the chain is tested on its own.
+------------------------------------------------------------------------------
+
+==============================================================================
+4. PART 2 — CODING TASKS
+==============================================================================
+Task A · Digit Sum   [Baseline, 15 points, 10 min limit]
+Variant parameters: sums odd digits
+Task statement (Python, function digit_sum):
+    Write digit_sum(n) that returns the sum of the odd digits of the non-negative integer n. Digits that are not odd are ignored.
+    digit_sum(9384) → 12
+    digit_sum(7) → 7
+
+Student submission:
+    def digit_sum(n):
+        # Write digit_sum(n) that returns the sum of the odd digits of the non-negative
+        # integer n. Digits that are not odd are ignored.
+        result = 0
+        digit_sumfirst(12)
+        for number in range (n)
+        (12 % 10)
+        (7 % 2)
+        ( % 2 
+        # your code here
+        return result
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines digit_sum(...) (2 pts)
+  [PASS] Loops over the digits (3 pts)
+  [PASS] Extracts digits (n % 10, or converts to text) (4 pts)
+  [PASS] Tests the digit parity (% 2 or & 1) (3 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 15 / 15
+------------------------------------------------------------------------------
+Task B · k-th Largest   [Intermediate, 20 points, 15 min limit]
+Variant parameters: 2nd largest distinct
+Task statement (Python, function kth_largest):
+    Write kth_largest(nums) that returns the second largest DISTINCT value in nums (duplicates count once). If there are fewer than 2 distinct values, return -1.
+    kth_largest([5, 9, 2, 9, 7, 3]) → 7
+    kth_largest([25, 1, 12, 18, 21, 6, 18, 19, 9]) → 21
+
+Student submission:
+    def kth_largest(nums):
+        # Write kth_largest(nums) that returns the second largest DISTINCT value in nums
+        # (duplicates count once). If there are fewer than 2 distinct values, return -1.
+        result = 0
+        row =len(m)
+        column = len(m[0])
+        for index in range()
+        if(largervalues >  
+        # your code here
+        return result
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines kth_largest(...) (2 pts)
+  [PASS] Loops through the list (3 pts)
+  [PASS] Ignores repeated values (set / seen / != checks) (5 pts)
+  [PASS] Finds larger values by comparing (>) (4 pts)
+  [FAIL] Returns -1 when there are too few distinct values (3 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 17 / 20
+------------------------------------------------------------------------------
+Task C · Transpose a Grid   [Advanced, 25 points, 20 min limit]
+Variant parameters: transpose, then +3
+Task statement (Python, function flip_grid):
+    Write flip_grid(m) for a rectangular grid (rows × columns, not necessarily square). Return a new grid that is the transpose of m (rows become columns), with 3 added to every value.
+    flip_grid([[3, 0, 1], [2, 7, 6]]) → [[6, 5], [3, 10], [4, 9]]
+    flip_grid([[-2, 6], [3, -3], [7, -2]]) → [[1, 6, 10], [9, 0, 1]]
+
+Student submission:
+    def flip_grid(m):
+        # Write flip_grid(m) for a rectangular grid (rows × columns, not necessarily square).
+        # Return a new grid that is the transpose of m (rows become columns), with 3 added to
+        # every value.
+        result = []
+        row =len(m)
+        
+        for row in range ()
+            for column in range()
+          [column][row] =m(0) 
+        column{}
+        # your code here
+        return result
+
+Grading method: pattern/structure checks only — the code was NOT executed, so review it manually
+  [PASS] Defines flip_grid(...) (2 pts)
+  [PASS] Uses nested loops over rows and columns (5 pts)
+  [PASS] Swaps the indexes (reads m[j][i] while writing [i][j]) (6 pts)
+  [FAIL] Uses the number of columns (m[0].length) (5 pts)
+  [FAIL] Adds the constant to each value (4 pts)
+  [PASS] Returns the result (3 pts)
+SCORE: 16 / 25
+------------------------------------------------------------------------------
+
+==============================================================================
+5. NOTES FOR THE REVIEWER
+==============================================================================
+* Quiz marking is exact (answer key generated for this student's variant).
+* JavaScript solutions are executed against test cases. Java and Python solutions are checked by pattern only; a correct but unusual solution may lose points, and an incorrect one that contains the right keywords may gain some. Please read the submissions above before finalising marks.
+* Different students receive different numbers/values for the same question type, so compare students by question TEMPLATE number and section, not by raw answers.
+
+End of record for Moses Anawo Aidoko.
+
+
+
+##############################################################################
+TEST 3 OF 3  ·  Form C  ·  JavaScript  ·  17 / 100  ·  Tier 1
+##############################################################################
+==============================================================================
+CODECIRCUIT ASSESSMENT RECORD
+==============================================================================
+Student name      : Moses Anawo Aidoko
+Assessment form   : Form C
+Language          : JavaScript
+Submitted         : 10/28/2026, 4:14:16 PM  (2026-10-28T15:14:16.570Z)
+Time taken        : 41 minute(s)
+Tab switches      : 0  (times the student left the assessment tab)
+Variant ID        : 1314734277  (questions, numbers, option order and coding parameters are randomised per student)
+Format note       : plain text. Parts are separated by lines of "=". Every question includes the student's response, the answer key and the explanation, so this file can be marked or analysed directly.
+
+==============================================================================
+1. SCORE SUMMARY
+==============================================================================
+TOTAL SCORE       : 17 / 100
+PLACEMENT         : Tier 1 · Foundations  (score band: Below 50% — Needs support with the basics)
+Quiz              : 11.2 / 40   (7 of 25 questions correct)
+Task A            : 3.8 / 15   (Digit Sum)
+Task B            : 2 / 20   (k-th Largest)
+Task C            : 0 / 25   (Transpose a Grid)
+Weighting         : Quiz 40 + Task A 15 + Task B 20 + Task C 25 = 100 points. Tier 1 < 50, Tier 2 = 50–85, Tier 3 > 85.
+
+Section breakdown:
+  Variables & Operators    14%   (1 / 7 correct)
+  Control Structures       29%   (2 / 7 correct)
+  Functions & Scope        40%   (2 / 5 correct)
+  Arrays & Matrices        33%   (2 / 6 correct)
+  Task A                   25%   (3.8 / 15 pts)
+  Task B                   10%   (2 / 20 pts)
+  Task C                    0%   (0 / 25 pts)
+
+==============================================================================
+2. ANALYSIS
+==============================================================================
+Strengths  (>= 75%): none yet
+Focus areas (< 60%): Task C 0%; Task B 10%; Variables & Operators 14%; Task A 25%; Control Structures 29%; Arrays & Matrices 33%; Functions & Scope 40%
+Quiz questions missed: Q1 [Arrays & Matrices], Q3 [Functions & Scope], Q4 [Variables & Operators], Q6 [Variables & Operators], Q7 [Functions & Scope], Q8 [Arrays & Matrices], Q11 [Control Structures], Q12 [Variables & Operators], Q13 [Arrays & Matrices], Q15 [Control Structures], Q16 [Control Structures], Q17 [Control Structures], Q19 [Arrays & Matrices], Q20 [Variables & Operators], Q22 [Control Structures], Q23 [Variables & Operators], Q24 [Functions & Scope], Q25 [Variables & Operators]
+Stages auto-submitted by the timer: Task A
+
+Recommended track: Targeted remediation on syntax and loop mechanics
+  * Re-trace variable assignment, operators and precedence by hand — 15–20 short drills a day for two weeks.
+  * Loop mechanics clinic: write trace tables (i, total, output) for for/while loops, then practise break and continue.
+  * Re-do the baseline coding task daily from a blank file until the syntax in your language is automatic.
+  * Join a small-group instructor clinic and pair with a Tier 3 peer; re-assess in two weeks.
+
+Targeted remediation:
+  * Task C: Result has as many rows as the input has columns; result[j][i] = m[i][j] + k. Test with a 2×3 grid.
+  * Task B: First remove duplicates, then find the biggest, remove it, repeat; return -1 if you run out.
+  * Variables & Operators: Hand-trace assignments and operator precedence; drill integer division (/, //, Math.floor) and the % operator on small numbers.
+  * Task A: Peel digits with % 10 and / 10 in a loop on a scrap of paper (1234 → 4, 3, 2, 1), then add the right ones.
+  * Control Structures: Build trace tables (i, total, output) for if/else chains and for-loops; practise break vs continue on 5-line programs.
+  * Arrays & Matrices: Draw arrays and grids with index labels; practise last-index (length - 1) and row/column traversal, including diagonals.
+  * Functions & Scope: Practise parameters vs arguments, return values, and local vs global variables; predict output before running.
+
+==============================================================================
+3. PART 1 — CONCEPT QUIZ (25 questions, in the order this student saw them)
+==============================================================================
+Q1  [Arrays & Matrices]  (multiple choice)   Template #24
+Question: What is printed? (Rows and columns both start at 0.)
+Code (JavaScript):
+    let level = [[6, 4, 4, 9], [9, 8, 4, 8], [1, 6, 5, 2], [9, 1, 9, 5]];
+    console.log(level[1][2]);
+    console.log(level[level.length - 1][0]);
+    console.log(level[0][level[0].length - 1]);
+Options:
+    A) 4, 9, 9
+    B) 4, 9, 9, 9
+    C) 4, 1, 9
+    D) 9, 9, 4
+Student response : B) 4, 9, 9, 9
+Correct answer   : A) 4, 9, 9
+Result           : INCORRECT (0 pts)
+Explanation      : matrix[row][col]: the first index picks the row, the second the column. Diagonal cells have row = col; the anti-diagonal has col = n - 1 - row.
+------------------------------------------------------------------------------
+Q2  [Control Structures]  (multiple choice)   Template #14
+Question: What is printed?
+Code (JavaScript):
+    let z = [15, 6, 3, 22, 28, 7, 21, 3];
+    let total = 0;
+    let i = 0;
+    while (i < z.length && z[i] <= 19) {
+        total += z[i];
+        i++;
+    }
+    console.log(i);
+Options:
+    A) 0
+    B) 3
+    C) 4
+    D) 5
+Student response : B) 3
+Correct answer   : B) 3
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Trace the array index by index; an early break/exit stops the search, otherwise the loop keeps updating the result.
+------------------------------------------------------------------------------
+Q3  [Functions & Scope]  (multiple choice)   Template #18
+Question: What is printed? (Each call prints on its own line; give the values in order, separated by commas.)
+Code (JavaScript):
+    function shift(n, k) {
+        let c = 0;
+        for (let i = 1; i <= n; i++) {
+            if (i % k == 0) {
+                c += i;
+            }
+        }
+        return c;
+    }
+    
+    console.log(shift(9, 2));
+    console.log(shift(3, 2));
+Options:
+    A) 20, 2, 2
+    B) 25, 4
+    C) (nothing printed)
+    D) 20, 2
+Student response : A) 20, 2, 2
+Correct answer   : D) 20, 2
+Result           : INCORRECT (0 pts)
+Explanation      : Each call starts with fresh local variables; trace the loop inside the function for each argument.
+------------------------------------------------------------------------------
+Q4  [Variables & Operators]  (multiple choice)   Template #7
+Question: What is printed?
+Code (JavaScript):
+    let y = 12;
+    let p = 32;
+    let avg = y + Math.floor(p / 2);
+    let rest = (y + p) % 7;
+    console.log(avg + rest);
+Options:
+    A) 22
+    B) 24
+    C) 30
+    D) 34
+Student response : B) 24
+Correct answer   : C) 30
+Result           : INCORRECT (0 pts)
+Explanation      : Division and remainder are done on the exact values shown — follow each variable.
+------------------------------------------------------------------------------
+Q5  [Variables & Operators]  (multiple choice)   Template #5
+Question: What is printed? (Work out each condition: true or false.)
+Code (JavaScript):
+    let c = 3;
+    let y = 7;
+    let num = 6;
+    let score = 0;
+    if (!(c > 7 || y > 7)) {
+        score += 1;
+    }
+    if (y % 3 == 0 && num > c) {
+        score += 2;
+    }
+    if (c != num || y > c) {
+        score += 4;
+    }
+    console.log(score);
+Options:
+    A) 3
+    B) 4
+    C) 5
+    D) 7
+Student response : C) 5
+Correct answer   : C) 5
+Result           : CORRECT  (+1.6 pts)
+Explanation      : score adds 1, 2 and/or 4 depending on which conditions are true. && needs both sides true, || needs just one, ! flips the result.
+------------------------------------------------------------------------------
+Q6  [Variables & Operators]  (multiple choice)   Template #6
+Question: What is printed?
+Code (JavaScript):
+    let value = 60;
+    let k = value % 3;
+    if (k == 0) {
+        console.log(Math.floor(value / 3));
+    } else {
+        console.log(value - k);
+    }
+Options:
+    A) 0
+    B) 15
+    C) 20
+    D) 30
+Student response : D) 30
+Correct answer   : C) 20
+Result           : INCORRECT (0 pts)
+Explanation      : Check the remainder first: if it is 0 the number divides evenly, otherwise the else branch runs.
+------------------------------------------------------------------------------
+Q7  [Functions & Scope]  (multiple choice)   Template #15
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (JavaScript):
+    function step(n) {
+        n = n * 3;
+        console.log(n);
+    }
+    
+    let m = 4;
+    step(m);
+    console.log(m);
+Options:
+    A) (nothing printed)
+    B) 4, 12
+    C) 8, 4
+    D) 12, 4
+Student response : B) 4, 12
+Correct answer   : D) 12, 4
+Result           : INCORRECT (0 pts)
+Explanation      : Arguments are copied into the parameters, so changing a parameter does not change the caller's variable. Only the returned value comes back — and a function stops at its first return.
+------------------------------------------------------------------------------
+Q8  [Arrays & Matrices]  (multiple choice)   Template #22
+Question: What is printed? (Give the printed values in order, separated by commas.)
+Code (JavaScript):
+    let num = [13, 1, 3, 6, 7];
+    for (let i = 0; i < num.length; i++) {
+        num[i] = num[i] + i;
+    }
+    console.log(num[0]);
+    console.log(num[2]);
+    console.log(num[num.length - 1]);
+Options:
+    A) 5, 11
+    B) 13, 5, 11
+    C) 13, 5, 9
+    D) 11, 5, 13
+Student response : A) 5, 11
+Correct answer   : B) 13, 5, 11
+Result           : INCORRECT (0 pts)
+Explanation      : Swapping needs a temporary variable to hold one element; changes are made in the array itself, so later reads see the new values.
+------------------------------------------------------------------------------
+Q9  [Functions & Scope]  (multiple choice)   Template #17
+Question: What is printed?
+Code (JavaScript):
+    function adjust(n) {
+        return n + 4;
+    }
+    
+    function process(n) {
+        return n * 3;
+    }
+    
+    console.log(process(adjust(5)));
+Options:
+    A) 24
+    B) 27
+    C) 30
+    D) 60
+Student response : B) 27
+Correct answer   : B) 27
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Evaluate the innermost call first; its result becomes the argument of the next call. Work outwards step by step.
+------------------------------------------------------------------------------
+Q10  [Functions & Scope]  (multiple choice)   Template #19
+Question: What is printed? (Give the values in order, separated by commas.)
+Code (JavaScript):
+    function step(a, v) {
+        v = v + 3;
+        a[1] = v;
+    }
+    
+    let amount = [4, 5, 2, 12];
+    let level = 5;
+    step(amount, level);
+    console.log(amount[1]);
+    console.log(level);
+Options:
+    A) 8, 5
+    B) (nothing printed)
+    C) 7, 5
+    D) 5, 8
+Student response : A) 8, 5
+Correct answer   : A) 8, 5
+Result           : CORRECT  (+1.6 pts)
+Explanation      : An array parameter shares the SAME array, so changes made inside the function are visible to the caller; a plain int parameter is only a copy.
+------------------------------------------------------------------------------
+Q11  [Control Structures]  (multiple choice)   Template #13
+Question: What is printed?
+Code (JavaScript):
+    let total = 0;
+    for (let i = 0; i < 11; i++) {
+        if (i > 11) {
+            break;
+        }
+        if (i % 4 == 1) {
+            continue;
+        }
+        total += i * 2;
+    }
+    console.log(total);
+Options:
+    A) 74
+    B) 80
+    C) 86
+    D) 94
+Student response : C) 86
+Correct answer   : B) 80
+Result           : INCORRECT (0 pts)
+Explanation      : continue skips the rest of THIS pass; break leaves the loop completely. Track which values reach the line after the if.
+------------------------------------------------------------------------------
+Q12  [Variables & Operators]  (multiple choice)   Template #1
+Question: What is printed?
+Code (JavaScript):
+    let level = 5;
+    let a = 19;
+    level = a;
+    a = level + 4;
+    console.log(level + a);
+Options:
+    A) 41
+    B) 42
+    C) 43
+    D) 44
+Student response : D) 44
+Correct answer   : B) 42
+Result           : INCORRECT (0 pts)
+Explanation      : Each assignment uses the CURRENT values — x is overwritten first, so y is built from the new x.
+------------------------------------------------------------------------------
+Q13  [Arrays & Matrices]  (multiple choice)   Template #25
+Question: What is printed?
+Code (JavaScript):
+    let count = [[2, 1, 7, 7], [9, 8, 8, 3], [6, 7, 3, 9], [6, 2, 2, 6]];
+    let total = 0;
+    for (let i = 0; i < count.length; i++) {
+        for (let j = 0; j < count[0].length; j++) {
+            if ((i + j) % 2 == 0) {
+                total += count[i][j];
+            }
+        }
+    }
+    console.log(total);
+Options:
+    A) 36
+    B) 37
+    C) 67
+    D) 86
+Student response : A) 36
+Correct answer   : B) 37
+Result           : INCORRECT (0 pts)
+Explanation      : The outer loop walks rows, the inner loop walks columns; trace which cells meet the condition and combine them as the code says.
+------------------------------------------------------------------------------
+Q14  [Arrays & Matrices]  (multiple choice)   Template #21
+Question: What is printed?
+Code (JavaScript):
+    let count = [17, 8, 3, 15, 1, 3, 3];
+    let total = 0;
+    for (const x of count) {
+        if (x % 3 == 0) {
+            total += x;
+        }
+    }
+    console.log(total);
+Options:
+    A) 1
+    B) 15
+    C) 24
+    D) 25
+Student response : C) 24
+Correct answer   : C) 24
+Result           : CORRECT  (+1.6 pts)
+Explanation      : Walk through the array once, updating the running answer (largest, count, position, or sum) whenever the condition holds.
+------------------------------------------------------------------------------
+Q15  [Control Structures]  (multiple choice)   Template #12
+Question: What is printed?
+Code (JavaScript):
+    let count = 0;
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (j < i) {
+                count++;
+            }
+        }
+    }
+    console.log(count);
+Options:
+    A) 3
+    B) 6
+    C) 7
+    D) 9
+Student response : A) 3
+Correct answer   : B) 6
+Result           : INCORRECT (0 pts)
+Explanation      : The inner loop runs completely for each pass of the outer loop. Count the (i, j) pairs that satisfy the condition.
+------------------------------------------------------------------------------
+Q16  [Control Structures]  (multiple choice)   Template #10
+Question: What is printed?
+Code (JavaScript):
+    let total = 0;
+    for (let i = 1; i <= 13; i++) {
+        if (i % 3 == 0) {
+            total += i;
+        }
+    }
+    console.log(total);
+Options:
+    A) 0
+    B) 24
+    C) 26
+    D) 30
+Student response : A) 0
+Correct answer   : D) 30
+Result           : INCORRECT (0 pts)
+Explanation      : Step through each loop pass, updating the accumulator only when the condition is true. Remember whether the range includes its end value.
+------------------------------------------------------------------------------
+Q17  [Control Structures]  (multiple choice)   Template #11
+Question: What is printed?
+Code (JavaScript):
+    let a = 514;
+    let steps = 0;
+    while (a > 0) {
+        a = Math.floor(a / 10);
+        steps++;
+    }
+    console.log(steps);
+Options:
+    A) 0
+    B) 3
+    C) 4
+    D) 5
+Student response : C) 4
+Correct answer   : B) 3
+Result           : INCORRECT (0 pts)
+Explanation      : Trace the loop: test the condition, run the body, update, and test again. The loop stops the first time the condition is false.
+------------------------------------------------------------------------------
+Q18  [Arrays & Matrices]  (multiple choice)   Template #20
+Question: What is printed? (Indexes start at 0. Give the printed values in order, separated by commas.)
+Code (JavaScript):
+    let level = [2, 14, 3, 10, 5];
+    console.log(level[0]);
+    console.log(level[level.length - 1]);
+    console.log(level[3] + level[3 + 1]);
+Options:
+    A) 2, 5, 13
+    B) 2, 5, 15
+    C) 2, 5, 50
+    D) 15, 5, 2
+Student response : B) 2, 5, 15
+Correct answer   : B) 2, 5, 15
+Result           : CORRECT  (+1.6 pts)
+Explanation      : The first element is index 0, the last is length - 1. Evaluate the index expression first, then read the element at that position.
+------------------------------------------------------------------------------
+Q19  [Arrays & Matrices]  (multiple choice)   Template #23
+Question: What is printed?
+Code (JavaScript):
+    let m = [2, 1, 11, 11, 8, 9, 5];
+    let count = 0;
+    for (let i = 1; i < m.length; i++) {
+        if (m[i] > m[i - 1]) {
+            count++;
+        }
+    }
+    console.log(count);
+Options:
+    A) -1
+    B) 0
+    C) 2
+    D) 3
+Student response : D) 3
+Correct answer   : C) 2
+Result           : INCORRECT (0 pts)
+Explanation      : Comparing a[i] with a[i-1] (or a[i+1]) needs the loop to stop one short — trace the pairs one by one.
+------------------------------------------------------------------------------
+Q20  [Variables & Operators]  (multiple choice)   Template #3
+Question: What is printed? (Integer division and remainder.)
+Code (JavaScript):
+    let p = 354;
+    let k = Math.floor(p / 100);
+    let z = Math.floor(p / 10) % 10;
+    console.log(k + z);
+Options:
+    A) 3
+    B) 8
+    C) 11
+    D) 59
+Student response : A) 3
+Correct answer   : B) 8
+Result           : INCORRECT (0 pts)
+Explanation      : n / 100 is the hundreds digit; (n / 10) % 10 is the tens digit.
+------------------------------------------------------------------------------
+Q21  [Control Structures]  (multiple choice)   Template #8
+Question: What is printed? (Several lines may print — give them in order, separated by commas.)
+Code (JavaScript):
+    let level = 9;
+    if (level > 11) {
+        console.log("A");
+    }
+    if (level > 22) {
+        console.log("B");
+    }
+    if (level % 5 == 0) {
+        console.log("C");
+    }
+    console.log("end");
+Options:
+    A) (nothing printed)
+    B) end
+    C) B, end
+    D) C, end
+Student response : B) end
+Correct answer   : B) end
+Result           : CORRECT  (+1.6 pts)
+Explanation      : These are separate if statements (no else), so EVERY condition is tested and any that are true print.
+------------------------------------------------------------------------------
+Q22  [Control Structures]  (multiple choice)   Template #9
+Question: What is printed? (Give all printed values in order, separated by commas.)
+Code (JavaScript):
+    let m = 87;
+    if (m >= 67) {
+        console.log("pass");
+    } else {
+        console.log("retry");
+    }
+    if (m >= 82) {
+        console.log("merit");
+    } else if (m >= 52) {
+        console.log("near");
+    } else {
+        console.log("far");
+    }
+Options:
+    A) pass, merit
+    B) (nothing printed)
+    C) pass, merit, merit
+    D) pass, near
+Student response : B) (nothing printed)
+Correct answer   : A) pass, merit
+Result           : INCORRECT (0 pts)
+Explanation      : In an if / else-if chain only the FIRST true branch runs; a separate if after the chain is tested on its own.
+------------------------------------------------------------------------------
+Q23  [Variables & Operators]  (multiple choice)   Template #2
+Question: What value is printed? (Remember operator precedence.)
+Code (JavaScript):
+    let d = 9;
+    let count = 6;
+    let c = 3;
+    let b = 5;
+    let result = d - count + c * b;
+    console.log(result);
+Options:
+    A) 11
+    B) 18
+    C) 30
+    D) 45
+Student response : D) 45
+Correct answer   : B) 18
+Result           : INCORRECT (0 pts)
+Explanation      : Multiplication, division and remainder bind tighter than addition and subtraction; brackets go first; equal-precedence operators run left to right.
+------------------------------------------------------------------------------
+Q24  [Functions & Scope]  (multiple choice)   Template #16
+Question: What is printed? (Each printed line is shown separated by commas.)
+Code (JavaScript):
+    let level = 16;
+    function apply() {
+        let level = 8;
+        level += 5;
+        console.log(level);
+    }
+    
+    apply();
+    console.log(level);
+Options:
+    A) 13
+    B) 40, 16
+    C) 13, 16, 16
+    D) 13, 16
+Student response : B) 40, 16
+Correct answer   : D) 13, 16
+Result           : INCORRECT (0 pts)
+Explanation      : A variable declared inside a function is a separate local variable — even with the same name as the global, it never changes it.
+------------------------------------------------------------------------------
+Q25  [Variables & Operators]  (short answer)   Template #4
+Question: What is printed? (Type a number.)
+Code (JavaScript):
+    let amount = 53;
+    amount += 7;
+    amount *= 3;
+    amount -= 6;
+    amount = Math.floor(amount / 2);
+    amount++;
+    console.log(amount);
+Student response : 65
+Correct answer   : 88
+Result           : INCORRECT (0 pts)
+Explanation      : Apply each compound assignment in order to the CURRENT value of amount; the final ++ adds one. Final: 88.
+------------------------------------------------------------------------------
+
+==============================================================================
+4. PART 2 — CODING TASKS
+==============================================================================
+Task A · Digit Sum   [Baseline, 15 points, 10 min limit]
+Variant parameters: sums even digits
+Task statement (JavaScript, function digitSum):
+    Write digitSum(n) that returns the sum of the even digits of the non-negative integer n. Digits that are not even are ignored.
+    digitSum(5506) → 6
+    digitSum(67) → 6
+
+Student submission (AUTO-SUBMITTED when the timer ended):
+    function digitSum(n) {
+      // Write digitSum(n) that returns the sum of the even digits of the non-negative
+      // integer n. Digits that are not even are ignored.
+      let result = 0;
+      let digit
+     
+      return result;
+    }
+
+Grading method: automated tests — the code was actually executed
+  [FAIL] Example: digitSum(5506) → 6
+         Got 0, expected 6
+  [FAIL] Example: digitSum(67) → 6
+         Got 0, expected 6
+  [PASS] Test 3: digitSum(0) → 0
+  [PASS] Test 4: digitSum(7) → 0
+  [FAIL] Test 5: digitSum(20200) → 4
+         Got 0, expected 4
+  [FAIL] Test 6: digitSum(90817) → 8
+         Got 0, expected 8
+  [FAIL] Test 7: digitSum(458114) → 16
+         Got 0, expected 16
+  [FAIL] Test 8: digitSum(364) → 10
+         Got 0, expected 10
+SCORE: 3.8 / 15
+------------------------------------------------------------------------------
+Task B · k-th Largest   [Intermediate, 20 points, 15 min limit]
+Variant parameters: 2nd largest distinct
+Task statement (JavaScript, function kthLargest):
+    Write kthLargest(nums) that returns the second largest DISTINCT value in nums (duplicates count once). If there are fewer than 2 distinct values, return -1.
+    kthLargest([5, 9, 2, 9, 7, 3]) → 7
+    kthLargest([10, 24, 3, 0, 8, 4, 8]) → 10
+
+Student submission:
+    function kthLargest(nums) {
+      // Write kthLargest(nums) that returns the second largest DISTINCT value in nums
+      // (duplicates count once). If there are fewer than 2 distinct values, return -1.
+      let result = 0;
+        let count = 0;
+        
+        kthlargest = 4
+      return result;
+    }
+
+Grading method: automated tests — the code was actually executed
+  [FAIL] Example: kthLargest([5, 9, 2, 9, 7, 3]) → 7
+         Got 0, expected 7
+  [FAIL] Example: kthLargest([10, 24, 3, 0, 8, 4, 8]) → 10
+         Got 0, expected 10
+  [FAIL] Test 3: kthLargest([4, 4, 4]) → -1
+         Got 0, expected -1
+  [FAIL] Test 4: kthLargest([]) → -1
+         Got 0, expected -1
+  [FAIL] Test 5: kthLargest([8]) → -1
+         Got 0, expected -1
+  [FAIL] Test 6: kthLargest([1, 2]) → 1
+         Got 0, expected 1
+  [FAIL] Test 7: kthLargest([3, 3, 2, 2, 1, 1]) → 2
+         Got 0, expected 2
+  [FAIL] Test 8: kthLargest([-6, -2, 1, -5, 6, -8]) → 1
+         Got 0, expected 1
+  [FAIL] Test 9: kthLargest([10, 20, 30]) → 20
+         Got 0, expected 20
+  [PASS] Does not modify the input you were given
+SCORE: 2 / 20
+------------------------------------------------------------------------------
+Task C · Transpose a Grid   [Advanced, 25 points, 20 min limit]
+Variant parameters: transpose, then +5
+Task statement (JavaScript, function flipGrid):
+    Write flipGrid(m) for a rectangular grid (rows × columns, not necessarily square). Return a new grid that is the transpose of m (rows become columns), with 5 added to every value.
+    flipGrid([[1, 3, 9], [6, 0, 6]]) → [[6, 11], [8, 5], [14, 11]]
+    flipGrid([[7, -2], [3, 6], [-1, 3]]) → [[12, 8, 4], [3, 11, 8]]
+
+Student submission:
+    function flipGrid(m) {
+      // Write flipGrid(m) for a rectangular grid (rows × columns, not necessarily square).
+      // Return a new grid that is the transpose of m (rows become columns), with 5 added to
+      // every value.
+      let result = [];
+        rows
+      
+      return result;
+    }
+
+Grading method: automated tests — the code was actually executed
+  [FAIL] Example: flipGrid([[1, 3, 9], [6, 0, 6]]) → [[6, 11], [8, 5], [14, 11]]
+         Threw: rows is not defined
+  [FAIL] Example: flipGrid([[7, -2], [3, 6], [-1, 3]]) → [[12, 8, 4], [3, 11, 8]]
+         Threw: rows is not defined
+  [FAIL] Test 3: flipGrid([[7]]) → [[12]]
+         Threw: rows is not defined
+  [FAIL] Test 4: flipGrid([[1, 1, 5, 2]]) → [[6], [6], [10], [7]]
+         Threw: rows is not defined
+  [FAIL] Test 5: flipGrid([[3], [9], [6], [3]]) → [[8, 14, 11, 8]]
+         Threw: rows is not defined
+  [FAIL] Test 6: flipGrid([[20, 0, 19], [1, 7, 3], [11, 20, 13]]) → [[25, 6, 16], [5, 12, 25], [24, 8,…
+         Threw: rows is not defined
+  [FAIL] Test 7: flipGrid([[5, 12, 6, 9, -2], [-5, 0, -2, 3, -1]]) → [[10, 0], [17, 5], [11, 3], [14, …
+         Threw: rows is not defined
+  [FAIL] Test 8: flipGrid([[7, 5, 2], [11, 2, 0], [3, 8, 13], [3, 2, 11]]) → [[12, 16, 8, 8], [10, 7, …
+         Threw: rows is not defined
+  [FAIL] Does not modify the input you were given
+         Threw: rows is not defined
+SCORE: 0 / 25
+------------------------------------------------------------------------------
+
+==============================================================================
+5. NOTES FOR THE REVIEWER
+==============================================================================
+* Quiz marking is exact (answer key generated for this student's variant).
+* JavaScript solutions are executed against test cases. Java and Python solutions are checked by pattern only; a correct but unusual solution may lose points, and an incorrect one that contains the right keywords may gain some. Please read the submissions above before finalising marks.
+* Different students receive different numbers/values for the same question type, so compare students by question TEMPLATE number and section, not by raw answers.
+
+End of record for Moses Anawo Aidoko.
+
+
+End of complete record for Moses Anawo Aidoko.
